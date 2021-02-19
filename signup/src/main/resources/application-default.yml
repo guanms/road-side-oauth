@@ -1,15 +1,19 @@
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 60000
+feign:
+  hystrix:
+    enabled: false
+mapper:
+  mappers:
+    - tk.mybatis.mapper.common.Mapper
+  before: true
+  not-empty: false
+mybatis:
+  type-aliases-package: com.tingbei.common.entity
+  mapper-locations: classpath*:mapper/**/*.xml
 ribbon:
   ConnectTimeout: 15000
   ReadTimeout: 60000
+server:
+  port: 12002
 spring:
   application:
-    name: zuul
-zuul:
-  ignored-services: "*"
+    name: signup

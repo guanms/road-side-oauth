@@ -5,6 +5,7 @@ package com.tingbei.common.repository;/**
 
 import com.tingbei.common.entity.RoleInfo;
 import org.springframework.stereotype.Repository;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  *@Date:2021/2/19 16:46
  */
 @Repository
-public interface RoleInfoRepository {
+public interface RoleInfoRepository extends Mapper<RoleInfo> {
 
     List<RoleInfo> selectByRoleDesc(String riRoleDesc, String userAttribute, String loginName);
 }

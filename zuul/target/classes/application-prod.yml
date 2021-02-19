@@ -1,0 +1,14 @@
+server:
+  port: 12000
+spring:
+  cloud:
+    zookeeper:
+      connect-string: 172.19.166.225:2181,172.19.166.224:2181,172.19.166.223:2181
+      discovery:
+        root: /authorityCenter/service/0.0.1-SNAPSHOT
+
+logging:
+  file:
+    path: /tmp/logs/authorityCenter/zuul
+  level:
+    root: debug

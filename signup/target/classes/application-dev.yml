@@ -1,0 +1,13 @@
+server:
+  port: 12000
+spring:
+  cloud:
+    zookeeper:
+      connect-string: 192.168.22.230:2181
+      discovery:
+        root: /oauth/dev_gms/service/0.0.1-SNAPSHOT
+
+logging:
+  level: debug
+  file:
+    path: E:\\Cache\\Logs\\oauthZuul

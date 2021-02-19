@@ -1,0 +1,25 @@
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 15000
+  ReadTimeout: 60000
+spring:
+  application:
+    name: zuul
+zuul:
+  ignored-services: "*"
+  routes:
+    oauth2Server:
+      path: /v1.0/oauth2Server/**
+      serviceId: oauth2Server
+    signUp:
+      path: /v1.0/signUp/**
+      serviceId: signup
+    dc:
+      path: /v1.0/dc/**
+      serviceId: dc

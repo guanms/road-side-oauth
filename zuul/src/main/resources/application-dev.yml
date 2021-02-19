@@ -1,0 +1,13 @@
+server:
+  port: 12000
+spring:
+  cloud:
+    zookeeper:
+      connect-string: 47.103.72.44:2181
+      discovery:
+        root: /authorityCenter/dev_gms/service/@project.version@
+
+
+logging:
+  level: debug
+  path: E:\\Cache\\Logs\\oauthZuul

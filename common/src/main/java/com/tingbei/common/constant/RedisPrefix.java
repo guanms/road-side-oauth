@@ -1,10 +1,5 @@
 package com.tingbei.common.constant;
 
-/**
- * redis的key值前缀枚举
- * Created by JJH on 2017/12/8.
- * @author JJH
- */
 public enum RedisPrefix {
     /**
      * 手机端微信公众号粉丝权限redis-key前缀

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>角色管理</title>
+		<link href="../oauth-signup-1.1/lib/bootstrap-table/css/bootstrap-table.css" rel="stylesheet" />
+		<link href="../oauth-signup-1.1/css/common.css" rel="stylesheet" />
+		<link href="../oauth-signup-1.1/css/newdialog.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../oauth-signup-1.1/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+		<script src="../oauth-signup-1.1/lib/bootstrap-table/js/bootstrap-table.js"></script>
+		<script src="../oauth-signup-1.1/lib/bootstrap-table/js/bootstrap-table-zh-CN.js"></script>
+		<script src="../oauth-signup-1.1/lib/zTree_v3/js/jquery.ztree.core.min.js" type="text/javascript"></script>
+		<script src="../oauth-signup-1.1/lib/zTree_v3/js/jquery.ztree.excheck.js" type="text/javascript"></script>
+		<script src="../oauth-signup-1.1/js/role/roleInfo.js" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<div class="row navbars" style="margin-top: 20px;margin-left: 30px;margin-right: 40px;">
+			<div id="upgradeMenu" class="col-xs-12">
+				<div class="navbars_nav">
+					<span>角色管理</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="margin-left: 40px;margin-right: 40px;">
+			<br />
+			<form class="navbar-form navbar-left" style="padding: 2px 0 8px 0;">
+				<div class="input-group" style="margin-right: 13px;">
+					<input type="text" value="" class="form-control" placeholder="角色描述" id="queryDesc">
+					<span class="input-group-btn"><button type="button" class="btn" onclick="query()"><span class="lnr lnr-arrow-right"></span></button>
+					</span>
+				</div>
+				<button type='button' class='btn btn-success member-op-btn' style='display:inline-block' onclick="showDialog()">
+				<span class='glyphicon glyphicon-plus'></span>&nbsp;增加
+			</button>
+			</form>
+			<div class="member-table-div">
+				<!--<table id="roleInfoTable" class="table table-hover staff-table" style="font-size: 13px;" style="font-size: 13px;table-layout:fixed"></table>-->
+				<table id="roleInfoTable" class="table table-hover member-table goods-info-table myselfTable" style="font-size: 13px;table-layout:fixed"></table>
+			</div>
+		</div>
+
+		<!-- 1、start新增/修改角色 -->
+		<div class="dialog-wrap" onClick="hideDialog()"></div>
+		<div class="modal-dialog content-wrap" role="document">
+			<div class="modal-content" style="color: #222222;border: 0px">
+				<div class="modal-header" style="background-color: #00C0D7;">
+					<label style="font-size:17px;color: #fff;" id="myModalLabel">新增或修改角色</label>
+				</div>
+
+				<form id="saveRoleInfoForm" class="form-horizontal" role="form">
+					<div class="body-storage" style="margin: 40px 0">
+						<div class="form-horizontal">
+							<input type="hidden" id="riId" name="riId" value="" />
+							<div class="form-group">
+								<label class="col-sm-3 control-label">角色名称</label>
+								<div class="col-sm-6">
+									<input type="text" id="riRoleName" name="riRoleName" class="form-control" title="角色名称">
+									<span class="text-danger"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">角色备注</label>
+								<div class="col-sm-6">
+									<input type="text" id="riRoleDesc" name="riRoleDesc" class="form-control" title="角色备注">
+									<span class="text-danger"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">角色级别</label>
+								<div class="col-sm-6">
+									<!--<input type="text" id="riLevel" name="riLevel" class="form-control" title="角色级别">
+									<span class="text-danger"></span>-->
+
+									<select id="riLevel" class="form-control">
+										<!-- 1：系统级别不可删除    2：非系统级别可以删除 -->
+										<option value=''>请选择</option>
+										<option value="1">系统</option>
+										<option value="0">非系统</option>
+									</select>
+									<span class="text-danger"></span>
+								</div>
+							</div>
+							<input type="hidden" id="riUuid" />
+						</div>
+					</div>
+				</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="saveRoleInfo()">保存</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hideDialog()">取消</button>
+				</div>
+			</div>
+		</div>
+		<!--1、end新增/修改角色-->
+
+		<!--2、start删除确认框-->
+		<div class="dialog-wrap3" onClick="hideDialog3()"></div>
+		<div class="modal-dialog content-wrap3 content-wrap-add2">
+			<div class="modal-content">
+				<div class="header-wrap header-del">
+					<label class="del">确认删除？</label>
+					<label class="close-btn" onClick="hideDialog3()">X</label>
+				</div>
+				<div class="body-wrap body-del">
+					<div class="content-item content-item-add">
+						<label class="delete-lab">确认删除？</label>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="deleteRoleInfoBtn">确定</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hideDialog3()">取消</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- 3、角色使用范围资源关系tree -->
+		<div class="dialog-wrap2" onClick="hideDialog2()"></div>
+		<div class="modal-dialog content-wrap2" role="document">
+			<div class="modal-content">
+				<div class="header-wrap">
+					<label style="font-size:17px;" id="myModalLabel">分配权限</label>
+					<!--<label class="close-btn" onClick="hideDialog2()">X</label>-->
+				</div>
+				<div class="input-group" style=" margin-top: 15px; padding: 4px;float:left">
+					<label class="radio-inline">
+				        <input type="radio" name="usOperateLevelRadio" value="show" onclick="refreshTree()" checked> 展示资源
+				    </label>
+				    <label class="radio-inline">
+				        <input type="radio" name="usOperateLevelRadio" value="select" onclick="refreshTree()"> 选择资源
+				    </label>
+				</div>
+				
+				<div class="input-group" style="margin-top: 10px; padding: 4px;">
+					<input type="text" value="" class="form-control" placeholder="资源名称" id="usName">
+					<span class="input-group-btn"><button type="button" class="btn" onclick="refreshTree()"><span class="lnr lnr-arrow-right"></span></button>
+					</span>
+				</div>
+				<input type="hidden" id="resourceTreeRiUuid"/>
+				<div style="overflow: auto;height: 500px;">
+					<ul id="treeDemo" class="ztree"></ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="saveAuthority('scope')">确定</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hideDialog2()">取消</button>
+				</div>
+			</div>
+		</div>
+		<!--3、end角色使用范围资源关系tree-->
+		
+		<!-- 4、角色服务资源关系tree -->
+		<div class="dialog-wrap4" onClick="hideDialog4()"></div>
+		<div class="modal-dialog content-wrap4" role="document">
+			<div class="modal-content">
+				<div class="header-wrap">
+					<label style="font-size:17px;">分配权限</label>
+					<!--<label class="close-btn" onClick="hideDialog4()">X</label>-->
+				</div>
+				<div class="input-group" style="margin-top: 15px; padding: 4px;float:left">
+					<label class="radio-inline">
+				        <input type="radio" name="srOperateLevelRadio" value="show" onclick="refreshSrTree()" checked> 展示资源
+				    </label>
+				    <label class="radio-inline">
+				        <input type="radio" name="srOperateLevelRadio" value="select" onclick="refreshSrTree()"> 选择资源
+				    </label>
+				</div>
+				<div class="input-group" style="margin-top: 10px; padding: 4px;">
+					<input type="text" value="" class="form-control" placeholder="资源名称" id="srName">
+					<span class="input-group-btn"><button type="button" class="btn" onclick="refreshSrTree()"><span class="lnr lnr-arrow-right"></span></button>
+					</span>
+				</div>
+				<input type="hidden" id="srTreeRiUuid"/>
+				<div style="overflow: auto;height: 500px;">
+					<ul id="srTree" class="ztree"></ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="saveAuthority('service')">确定</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hideDialog4()">取消</button>
+				</div>
+			</div>
+		</div>
+		<!--4、end角色服务资源关系tree-->
+
+
+		<style>
+			.modal-content label {
+				font-weight: 500;
+			}
+		</style>
+	</body>
+
+</html>

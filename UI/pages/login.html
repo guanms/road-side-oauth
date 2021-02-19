@@ -1,0 +1,72 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+    <title>路侧停车</title>
+
+    <link type="text/css" rel="stylesheet" href="../css/login.css"/>
+    <script type="text/javascript" src="../JS/Jquery/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript" src="../JS/Jquery/jquery.base64.js"></script>
+    <script type="text/javascript" src="../JS/commonPark.js"></script>
+    <script type="text/javascript" src="../JS/serverUrlConfig.js"></script>
+    <script type="text/javascript" src="../JS/login.js"></script>
+    <script type="text/javascript" src="../JS/Jquery/aes.min.js" ></script>
+</head>
+
+
+<body style="background: #ffffff; overflow: hidden;margin: 0px; ">
+
+<div class="index_logo">
+</div>
+<div class="index_logo_div">
+    <img class="login-div"  src="../images/tingbei-logo.png" style="height: auto;top:-18%;width: 100%;"> <img>
+    <div>
+        <div class="login-div login-tite-div">
+            <span>路测平台登录</span>
+        </div>
+        <div  class="login-div login-div-input" style="top: 35%;">
+            <img src="../images/loginname-icon.png" style="position: absolute;">
+            <input class="login_input " name="userName" type="text" placeholder="请输入用户名" id="userName" onkeyup="getCookie()"/>
+        </div>
+        <div class="login-div  login-div-input"  style="top: 50%;">
+            <img src="../images/passwd-icon.png" style="position: absolute;">
+            <input class="login_input" name="passWord" type="password" placeholder="请输入密码" id="passWord"/>
+        </div>
+        <div class="login-div" style=" top: 64%; font-size: 13px;color: #7C868D;width: 100%;">
+            <div style=" float: left;margin-left: 65px;">
+<!--                <label style="    display: block; border: 1px solid #c2bdbd; border-radius: 3px;width: 10px; height: 10px; float: left;"></label>-->
+                <div onclick="changeIsRemember()" style="cursor:hand">
+                    <div style="height: 5px;"><img src="../images/forget.png" style="width:15px;height:15px;" id="isRememberImg"></div>
+                    <input type="checkbox" value="" hidden/>
+                    <input type="hidden" value="0" id="isRemember">
+                    <span style="line-height: 5px;margin-left: 20px;">一周内记住我</span>
+                </div>
+            </div>
+            <div style=" float: right;margin-right: 65px;"><span style="line-height: 16px;">忘记密码</span></div>
+        </div>
+        <div class="login-div" style="top: 77%;">
+            <input onmouseover="this.style.backgroundColor='rgba(0,191,255,0.7)';" onmouseout="this.style.backgroundColor='#2B3034';" type="button" style="cursor:hand" class="login_button" value="立即登录" onclick="formSubmit();"/>
+        </div>
+        <div class="login-div" style=" top: 90%; font-size: 13px;color: #00AEC6">
+            <span><a style="text-decoration:none;color: #00AEC6" href="/pages/registerPermission.html">还没有账号，马上注册</a></span>
+        </div>
+    </div>
+</div>
+
+
+<!--<div style="position:absolute;transform: translate(-50%, -50%);left: 50%;top: 95%;">-->
+    <!--<span>苏ICP备15063752号-1 江苏同利网络科技有限公司</span>-->
+<!--</div>-->
+<div class="dialog-wrap" id="register_fail_dialog" onclick="closefaildialog()"></div>
+<div class="content-wrap" id="register_fail_wrap">
+
+    <div class="body-wrap">
+        <img src="../images/register-no.png" style="height: 60px; margin-top: 18px;">
+        <div style="font-size: 16px;color: #f77f5c;font-weight: 600;">登录失败</div>
+        <div style="font-size: 12px;" id="fail_message">您可以稍后重新操作</div>
+    </div>
+    <div class="footer-wrap">
+        <button class="btn_common btn_common__primary" style="color: #ffffff;background-color: #f77f5c" onclick="closefaildialog()">确定</button>
+    </div>
+</div>
+</body>
+</html>

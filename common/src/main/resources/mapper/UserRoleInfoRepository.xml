@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tingbei.common.repository.UserRoleInfoRepository">
+    <resultMap id="RoleInfoMap" type="com.tingbei.common.vo.RoleInfoExtendVO">
+        <result column="ri_uuid" property="riUuid" jdbcType="VARCHAR"/>
+        <result column="ri_role_name" property="riRoleName" jdbcType="VARCHAR"/>
+        <result column="ri_role_desc" property="riRoleDesc" jdbcType="VARCHAR"/>
+        <result column="isOwner" property="isOwner" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findUserRoleByUserName" parameterType="java.lang.String" resultMap="RoleInfoMap">
+        SELECT
+            b.ri_uuid,b.ri_role_name,b.ri_role_desc,1 as isOwner
+        FROM
+            user_role_info a,
+            role_info b
+        WHERE
+            a.ri_uuid = b.ri_uuid
+        and a .ui_uuid = #{uiUuid,jdbcType=VARCHAR}
+        <if test="null != riRoleDesc">
+            UNION
+            (
+            select ri_uuid,ri_role_name,ri_role_desc,0 as isOwner from role_info
+            WHERE ri_uuid not in
+            (select ri_uuid from user_role_info where  ui_uuid =#{uiUuid,jdbcType=VARCHAR})
+            and  ri_role_desc LIKE CONCAT('%','${riRoleDesc}','%' )
+            )
+        </if>
+        ORDER BY isOwner desc
+    </select>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO user_role_info (uri_uuid,ui_uuid,ri_uuid,identity_code,area_code)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.uriUuid},#{item.uiUuid}, #{item.riUuid},#{item.identityCode},#{item.areaCode})
+        </foreach>
+    </insert>
+
+
+    <select id="findSuUserRoleByUserName" parameterType="java.lang.String" resultMap="RoleInfoMap">
+        SELECT
+        b.ri_uuid,b.ri_role_name,b.ri_role_desc,1 as isOwner
+        FROM
+        user_role_info a,
+        role_info b
+        WHERE
+        a.ri_uuid = b.ri_uuid
+        and a .ui_uuid = #{uiUuid,jdbcType=VARCHAR}
+        <if test="null != riRoleDesc">
+            UNION
+            (
+            select ri_uuid,ri_role_name,ri_role_desc,0 as isOwner from role_info
+            WHERE ri_uuid not in
+            (select ri_uuid from user_role_info where  ui_uuid =#{uiUuid,jdbcType=VARCHAR})
+            and  ri_role_desc LIKE CONCAT('%','${riRoleDesc}','%' )
+            AND ri_create_man = #{createMan,jdbcType=VARCHAR}
+            )
+        </if>
+        ORDER BY isOwner desc
+    </select>
+
+    <select id="findRoleUuidByUserUuid" parameterType="java.lang.String" resultType="java.lang.String">
+        select DISTINCT ri_uuid from user_role_info
+        where ui_uuid = #{uiUuid,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findUserUuidByRoleUuid" parameterType="java.lang.String" resultType="java.lang.String">
+        select DISTINCT ui_uuid from user_role_info
+        where ri_uuid = #{riUuid,jdbcType=VARCHAR}
+    </select>
+</mapper>

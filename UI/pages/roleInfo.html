@@ -4,15 +4,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>角色管理</title>
-		<link href="../oauth-signup-1.1/lib/bootstrap-table/css/bootstrap-table.css" rel="stylesheet" />
-		<link href="../oauth-signup-1.1/css/common.css" rel="stylesheet" />
-		<link href="../oauth-signup-1.1/css/newdialog.css" rel="stylesheet" />
-		<link rel="stylesheet" href="../oauth-signup-1.1/lib/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
-		<script src="../oauth-signup-1.1/lib/bootstrap-table/js/bootstrap-table.js"></script>
-		<script src="../oauth-signup-1.1/lib/bootstrap-table/js/bootstrap-table-zh-CN.js"></script>
-		<script src="../oauth-signup-1.1/lib/zTree_v3/js/jquery.ztree.core.min.js" type="text/javascript"></script>
-		<script src="../oauth-signup-1.1/lib/zTree_v3/js/jquery.ztree.excheck.js" type="text/javascript"></script>
-		<script src="../oauth-signup-1.1/js/role/roleInfo.js" type="text/javascript"></script>
+		<link href="../lib/bootstrap-table/css/bootstrap-table.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		<link href="../css/newdialog.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../lib/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+		<script src="../lib/bootstrap-table/js/bootstrap-table.js"></script>
+		<script src="../lib/bootstrap-table/js/bootstrap-table-zh-CN.js"></script>
+		<script src="../lib/zTree_v3/js/jquery.ztree.core.min.js" type="text/javascript"></script>
+		<script src="../lib/zTree_v3/js/jquery.ztree.excheck.js" type="text/javascript"></script>
+		<script src="../JS/roleInfo.js" type="text/javascript"></script>
 	</head>
 
 	<body>
@@ -47,7 +47,7 @@
 		<div class="modal-dialog content-wrap" role="document">
 			<div class="modal-content" style="color: #222222;border: 0px">
 				<div class="modal-header" style="background-color: #00C0D7;">
-					<label style="font-size:17px;color: #fff;" id="myModalLabel">新增或修改角色</label>
+					<label style="font-size:17px;color: #fff;" id="myModalLabel">新增角色</label>
 				</div>
 
 				<form id="saveRoleInfoForm" class="form-horizontal" role="form">
@@ -68,21 +68,21 @@
 									<span class="text-danger"></span>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">角色级别</label>
-								<div class="col-sm-6">
-									<!--<input type="text" id="riLevel" name="riLevel" class="form-control" title="角色级别">
-									<span class="text-danger"></span>-->
+<!--							<div class="form-group">-->
+<!--								<label class="col-sm-3 control-label">角色级别</label>-->
+<!--								<div class="col-sm-6">-->
+<!--									&lt;!&ndash;<input type="text" id="riLevel" name="riLevel" class="form-control" title="角色级别">-->
+<!--									<span class="text-danger"></span>&ndash;&gt;-->
 
-									<select id="riLevel" class="form-control">
-										<!-- 1：系统级别不可删除    2：非系统级别可以删除 -->
-										<option value=''>请选择</option>
-										<option value="1">系统</option>
-										<option value="0">非系统</option>
-									</select>
-									<span class="text-danger"></span>
-								</div>
-							</div>
+<!--									<select id="riLevel" class="form-control">-->
+<!--										&lt;!&ndash; 1：系统级别不可删除    2：非系统级别可以删除 &ndash;&gt;-->
+<!--										<option value=''>请选择</option>-->
+<!--										<option value="1">系统</option>-->
+<!--										<option value="0">非系统</option>-->
+<!--									</select>-->
+<!--									<span class="text-danger"></span>-->
+<!--								</div>-->
+<!--							</div>-->
 							<input type="hidden" id="riUuid" />
 						</div>
 					</div>

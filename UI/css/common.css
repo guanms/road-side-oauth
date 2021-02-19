@@ -1,0 +1,107 @@
+button{
+	background-color: #00C0D7;
+}
+.navbars #upgradeMenu {
+	padding: 0;
+	padding-right: 15px;
+	border-bottom: 1px solid #e7e7eb;
+	height: 55px;
+}
+
+.navbars #upgradeMenu .navbars_nav {
+	float: left;
+	line-height: 55px;
+}
+
+.navbars #upgradeMenu .navbars_nav span {
+	color: #222222;
+	font-size: 16px;
+/*	font-weight: bold;*/
+}
+
+.formRow_bottom {
+	border-bottom: 1px solid #e7e7eb;
+}
+
+.oauth-app-info-container .float-left-container {
+	float: left;
+	text-align: left;
+}
+
+.oauth-app-info-container dl.keys {
+	margin: 40px 0;
+}
+
+.oauth-app-info-container dl.keys dt {
+	margin-top: 10px;
+	font-weight: 600;
+	color: #586069;
+}
+
+.oauth-app-info-container dl.keys dd {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	color: #333;
+}
+
+.myselfTable>tbody>tr>td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.header-space {
+	height: 28px;
+	width: 1px;
+	float: left;
+	background: #cdcdcd; 
+	/*margin-top: 16px;*/
+	margin: 16px 0 0 18px;
+}
+
+.header-title {
+	font-size: 20px;
+    color: #515151;
+    margin: 20px 400px 0 20px;
+    float: left;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: #00C0D7;
+	border-color: #00C0D7;
+}
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover {
+	color: #fff;
+	background-color: #00C0D7;
+	border-color: #00C0D7;
+}
+.btn-primary:hover{
+	color: #fff;
+	background-color: #00C0D7;
+	border-color: #00C0D7;
+}
+.btn-success {
+	color: #fff;
+	background-color: #00C0D7;
+	border-color: #00C0D7;
+}
+.btn-success:hover {
+	color: #fff;
+	background-color: #00C0D7;
+	border-color: #00C0D7;
+}
+.btn-success:active {
+	color: #fff;
+	background-color: #00C0D7;
+	border-color: #00C0D7;
+}
+.btn-success.active.focus, .btn-success.active:focus, .btn-success.active:hover, .btn-success:active.focus, .btn-success:active:focus, .btn-success:active:hover, .open>.dropdown-toggle.btn-success.focus, .open>.dropdown-toggle.btn-success:focus, .open>.dropdown-toggle.btn-success:hover {
+	color: #fff;
+	background-color: #00C0D7;
+	border-color: #00C0D7;
+}
+
+.header-wrap{
+	background-color: #00C0D7;
+}

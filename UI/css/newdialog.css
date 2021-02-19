@@ -1,0 +1,193 @@
+.dialog-wrap,.dialog-wrap2,.dialog-wrap3,.dialog-wrap4,.dialog-wrap5 {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, .5);
+	display: none;
+    z-index: 1000;
+}
+
+.content-wrap, .content-wrap2, .content-wrap3,.content-wrap4,.content-wrap5{
+    position: absolute;
+    top:45%;
+    left: 50%;
+    margin-left: -260px;
+    margin-top: -275px;
+    z-index: 1001;
+	display: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+
+}
+
+.header-wrap {
+    font-weight: normal;
+    padding: 15px 20px;
+    /* background-color: #fff; */
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: 1px 1px 10px rgba(194,194,194,.4);
+    /* color: #44BCE1; */
+    color: #fff;
+    background-color: #00C0D7;
+    font-size: 17px;
+    line-height: 17px;
+}
+
+.close-btn {
+    float: right;
+    cursor: pointer;
+    /* color: #aaa; */
+    color: #fff;
+}
+
+.close-btn:hover {
+	color: #ccc;
+}
+
+.body-wrap {
+	padding: 20px 55px;
+}
+
+.content-item {
+	margin-bottom: 5px;
+	height: 30px;
+}
+
+.item-title {
+	line-height: 30px;
+	width: 100px;
+	display: inline-block;
+	color: #666;
+}
+
+/* .item-title:before {
+	content: "*";
+	color: red;
+} */
+
+.item-title:after {
+	content: ":";
+	padding-left: 5px;
+}
+
+.item-input {
+	height: 30px;
+	border-radius: 3px;
+	border: 1px solid #bbb;
+	padding: 0 10px;
+	width: 220px;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.footer-btn {
+	height: 30px;
+    width: 100px;
+    border-radius: 3px;
+    border: 0;
+    float: right;
+    /*margin-right: 20px;*/
+    cursor: pointer;
+    line-height: 30px;
+    background-color: #0d82e1;
+    color: #fff;
+    /*margin-top: 50px;*/
+}
+
+.footer-btn:hover {
+	color: #eee;
+}
+
+.footer-btn:focus {
+	outline: 0;
+}
+
+.cancel-btn {
+    background-color: #61b6fb;
+}
+
+.required-field:before {
+    content: "*";
+    color: red;
+    padding-right: 2px;
+}
+
+.checkbox-url{
+    margin: 8px 0px 0px;
+    line-height: normal;
+    width: 15px;
+    height: 15px;
+}
+.material-ul{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    padding: 5px;
+    text-align: center;
+}
+.material-li{
+    padding: 5px;
+    height: 80%;
+    float: left;
+    width: 50%;
+}
+
+.material-content{
+    border: 1px solid #ddd;
+}
+
+.material-title{
+    height: 15%;
+    display: block;
+    line-height: 50px;
+    font-size: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: 1px solid;
+    border-color: #ddd;
+    font-family: "Microsoft YaHei", "simsun", "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.material-image{
+    width: 100%;
+    height: 85%;
+    background-image:url('https://www.baidu.com/img/bd_logo1.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.edit_mask {
+    font-size: 0;
+    width: 100%;
+    height: 100%;
+    margin-top: -279px;
+    /*background: rgba(0,0,0,0.6)!important;*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#99000000',endcolorstr = '#99000000');*/
+    color: #fff;
+    z-index: 1;
+    text-align: center;
+    padding: 14px;
+    display: none;
+}
+
+.icon_card_selected {
+    top: 50%;
+    left: 50%;
+    margin-top: 100px;
+    margin-left: -23px;
+    overflow: hidden;
+    z-index: 1;
+}
+.icon_card_selected {
+    background:  url("../images/base_icon.png") 0 -1940px no-repeat;
+    width: 46px;
+    height: 46px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.text-class{
+    margin: 0px -265px 0px 0px;
+}

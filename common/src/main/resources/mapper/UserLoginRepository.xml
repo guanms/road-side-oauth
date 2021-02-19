@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tingbei.common.repository.UserLoginRepository" >
+    <resultMap id="BaseResultMap" type="com.tingbei.common.vo.UserInfoVO">
+        <id column="ui_uuid" property="uiUuid" jdbcType="VARCHAR"/>
+        <result column="ui_username" property="userName" jdbcType="VARCHAR"/>
+        <result column="ui_loginname" property="loginName" jdbcType="VARCHAR"/>
+        <result column="ui_attribute" property="userAttribute" jdbcType="VARCHAR"/>
+        <result column="ui_status" property="userStatus" jdbcType="VARCHAR"/>
+        <result column="ui_create_man" property="userCreateMan" jdbcType="VARCHAR"/>
+        <result column="ui_create_time" property="userCreateTime" jdbcType="VARCHAR"/>
+        <result column="identity_code" property="identityCode" jdbcType="VARCHAR"/>
+        <result column="area_code" property="areaCode" jdbcType="INTEGER"/>
+        <result column="uei_special_mark" property="specialMark" jdbcType="VARCHAR"/>
+        <result column="uei_type" property="userType" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findByLoginNameAndPassword" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select a.*,b.uei_special_mark,b.uei_type from (
+            SELECT
+                *
+            FROM
+                user_info
+            WHERE
+                ui_loginname = #{loginName,jdbcType=VARCHAR}
+            AND ui_password = #{password,jdbcType=VARCHAR}
+        ) a
+        LEFT JOIN user_extend_info b on a.ui_uuid = b.ui_uuid
+    </select>
+</mapper>

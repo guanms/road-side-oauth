@@ -70,6 +70,11 @@
             <version>3.5.3</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.taobao</groupId>
+            <artifactId>taobao-sdk-java</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

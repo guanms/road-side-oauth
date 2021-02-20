@@ -1,12 +1,12 @@
 package com.tingbei.signup.service.impl;
 
 import com.tingbei.common.entity.UserInfo;
-import com.tingbei.common.repository.RegisterRepository;
 import com.tingbei.common.util.CommonUtil;
 import com.tingbei.common.util.GenerateUtil;
 import com.tingbei.common.util.MD5Util;
 import com.tingbei.common.vo.ServiceResultVO;
 import com.tingbei.common.vo.UserInfoVO;
+import com.tingbei.signup.repository.RegisterRepository;
 import com.tingbei.signup.service.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

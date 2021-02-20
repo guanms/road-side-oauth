@@ -20,6 +20,3 @@ zuul:
     signUp:
       path: /v1.0/signUp/**
       serviceId: signup
-    dc:
-      path: /v1.0/dc/**
-      serviceId: dc

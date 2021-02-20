@@ -16,22 +16,6 @@
         <result column="ui_password" property="password" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="BaseResultUserInfoMap" type="com.tingbei.common.entity.UserInfo">
-        <id column="ui_uuid" property="uiUuid" jdbcType="VARCHAR"/>
-        <result column="ui_username" property="uiUsername" jdbcType="VARCHAR"/>
-        <result column="ui_loginname" property="uiLoginname" jdbcType="VARCHAR"/>
-        <result column="ui_password" property="uiPassword" jdbcType="VARCHAR"/>
-        <result column="ui_attribute" property="uiAttribute" jdbcType="VARCHAR"/>
-        <result column="ui_status" property="uiStatus" jdbcType="VARCHAR"/>
-        <result column="ui_create_man" property="uiCreateMan" jdbcType="BIGINT"/>
-        <result column="ui_create_time" property="uiCreateTime" jdbcType="TIMESTAMP"/>
-        <result column="identity_code" property="identityCode" jdbcType="VARCHAR"/>
-        <result column="us_create_time" property="usCreateTime" jdbcType="TIME"/>
-        <result column="area_code" property="areaCode" jdbcType="INTEGER"/>
-        <result column="security_enabled" property="securityEnabled" jdbcType="VARCHAR"/>
-        <result column="security_authority" property="securityAuthority" jdbcType="VARCHAR"/>
-    </resultMap>
-
     <select id="queryWholeUserInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT
         a.ui_uuid,
@@ -132,7 +116,7 @@
         ORDER BY a.ui_create_time DESC
     </select>
 
-    <select id="queryAuditedUserInfoByUserNameFuzzy" parameterType="java.lang.String" resultMap="BaseResultUserInfoMap">
+    <select id="queryAuditedUserInfoByUserNameFuzzy" parameterType="java.lang.String" resultMap="BaseResultMap">
         SELECT
         a.ui_uuid,
         a.ui_username,
@@ -160,39 +144,4 @@
         a.ui_uuid = b.ui_uuid
         ORDER BY a.ui_create_time DESC
     </select>
-
-    <select id="checkUserNameCanUse" parameterType="java.lang.String" resultMap="BaseResultUserInfoMap">
-        SELECT
-        *
-        FROM
-        user_info
-        WHERE
-        ui_username = #{userName,jdbcType=VARCHAR}
-        <if test="null != uiUuid">
-            AND ui_uuid &lt;&gt; #{uiUuid,jdbcType=VARCHAR}
-        </if>
-    </select>
-
-    <select id="checkLoginNameCanUse"  parameterType="java.lang.String" resultMap="BaseResultUserInfoMap">
-        SELECT
-        *
-        FROM
-        user_info
-        WHERE
-        ui_loginname = #{loginName,jdbcType=VARCHAR}
-        <if test="null != uiUuid">
-            AND ui_uuid &lt;&gt; #{uiUuid,jdbcType=VARCHAR}
-        </if>
-    </select>
-
-    <select id="findUserInfosByUuids" parameterType="java.lang.String" resultMap="BaseResultUserInfoMap">
-        select * from user_info where ui_uuid IN
-        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item, jdbcType=VARCHAR}
-        </foreach>
-    </select>
-
-
-
-
 </mapper>

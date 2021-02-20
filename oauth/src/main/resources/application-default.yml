@@ -8,8 +8,16 @@ hystrix:
 ribbon:
   ConnectTimeout: 15000
   ReadTimeout: 60000
+mapper:
+  mappers:
+    - tk.mybatis.mapper.common.Mapper
+  before: true
+  not-empty: false
+mybatis:
+  type-aliases-package: com.vapor.entity
+  mapper-locations: classpath*:mapper/*.xml
 spring:
   application:
-    name: zuul
+    name: oauth2Server
 zuul:
   ignored-services: "*"

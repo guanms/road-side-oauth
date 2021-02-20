@@ -1,5 +1,5 @@
 var tableOption = {
-	url: config.oauthUrl+"/v1.0/dc/userRole/pageQueryAll",
+	url: oauthUrl+"/v1.0/oauth2Server/userRole/pageQueryAll",
 	method: "post",
 	pageList: [5, 10, 25, 50, 100],
 	queryParamsType: 'not limit',
@@ -153,7 +153,7 @@ function showAssignRoleDialog(uiUuid) {
 	showDialog();
 
 	$.ajax({
-		url: config.oauthUrl+"/v1.0/dc/userRole/findUserRoleByUiUuid",
+		url: oauthUrl+"/v1.0/oauth2Server/userRole/findUserRoleByUiUuid",
 		type: "post",
 		data: {
 			"uiUuid": uiUuid,
@@ -178,7 +178,7 @@ function showAssignRoleDialog(uiUuid) {
 
 function refreshRole() {
 	$.ajax({
-		url: config.oauthUrl+ "/v1.0/dc/userRole/findUserRoleByUiUuid",
+		url: oauthUrl+ "/v1.0/oauth2Server/userRole/findUserRoleByUiUuid",
 		type: "post",
 		data: {
 			"uiUuid": $("#uiUuid").val(),
@@ -211,7 +211,7 @@ function saveUserRoleInfo() {
 	};
 	$.ajax({
 		type: "post",
-		url: config.oauthUrl+"/v1.0/dc/userRole/saveUserRole",
+		url: oauthUrl+"/v1.0/oauth2Server/userRole/saveUserRole",
 		headers: {
 			'Content-Type': 'application/json'
 		},

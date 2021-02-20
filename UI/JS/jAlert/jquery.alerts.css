@@ -1,0 +1,85 @@
+#popup_container {
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	min-width: 300px; /* Dialog will be no smaller than this */
+	max-width: 600px; /* Dialog will wrap after this width */
+	background: #FFF;
+	border: solid 5px #999;
+	color: #000;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border: 0px solid #fff;
+	box-shadow: 0 5px 15px rgba(0,0,0,.5);
+	width: 350px;
+}
+
+#popup_title {
+	line-height: 40px;
+	font-family: "Microsoft YaHei","宋体","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif, FreeSans, Arimo;
+	text-align: left;
+	color: #FFF;
+	background: #00c0d8;
+	cursor: default;
+	padding-left: 1em;
+	margin: 0em;
+	height: 40px;
+	font-size: 15px;
+}
+
+#popup_content {
+	background: 16px 16px no-repeat url(images/info.gif);
+	padding: 1em 1.75em;
+	margin: 0em;
+	font-family: "Microsoft YaHei","宋体","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif, FreeSans, Arimo;
+	font-size: 15px;
+	color: #74777b;
+}
+
+#popup_content.alert {
+	background-image: url(images/info.gif);
+}
+
+#popup_content.confirm {
+	background-image: url(images/important.png);
+}
+
+.confirm input{
+	width: 60px;
+	height:26px;
+	margin-right: 10px;
+	background:url(images/btn_60.gif);
+	cursor:pointer;
+	border:none;
+	text-align: center; 
+	color:#4c7276;
+}
+
+#popup_panel input{
+	width: 60px;
+	height:26px;
+	margin-right: 10px;
+	background:url(images/btn_60.gif);
+	cursor:pointer;
+	border:none;
+	text-align: center;
+	color:#4c7276;
+}
+
+#popup_content.prompt {
+	background-image: url(images/help.gif);
+}
+
+#popup_message {
+	padding-left: 60px;
+	color: #74777b;
+	font-family: "Microsoft YaHei","宋体","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif, FreeSans, Arimo;
+}
+
+#popup_panel {
+	text-align: center;
+	margin: 1em 0em 0em 1em;
+}
+
+#popup_prompt {
+	margin: .5em 0em;
+}

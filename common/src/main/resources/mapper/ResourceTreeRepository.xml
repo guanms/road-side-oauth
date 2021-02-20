@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tingbei.common.repository.ResourceTreeRepository">
+    <resultMap id="UseScopeTreeVOMap" type="com.tingbei.common.vo.role.ResourceTreeVO">
+        <result column="us_uuid" property="uuid" jdbcType="VARCHAR"/>
+        <result column="pUuid" property="puuid" jdbcType="VARCHAR"/>
+        <result column="us_name" property="name" jdbcType="VARCHAR"/>
+        <result column="checked" property="checked" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="SrTreeVOMap" type="com.tingbei.common.vo.role.ResourceTreeVO">
+        <result column="sr_uuid" property="uuid" jdbcType="VARCHAR"/>
+        <result column="pUuid" property="puuid" jdbcType="VARCHAR"/>
+        <result column="sr_name" property="name" jdbcType="VARCHAR"/>
+        <result column="checked" property="checked" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="queryUseScopeTreeByRiUuid" parameterType="java.lang.String" resultMap="UseScopeTreeVOMap">
+        SELECT B.us_uuid,B.us_name,
+        (
+        CASE WHEN B.us_father_uuid IS NULL THEN '1'
+        ELSE
+        B.us_father_uuid
+        END
+        ) AS pUuid,
+        (
+        CASE WHEN B .us_uuid IN (
+        SELECT sr_uuid FROM authority WHERE ri_uuid = #{riUuid,jdbcType=VARCHAR} AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+        ) THEN 'true'
+        ELSE 'false'
+        END
+        ) AS CHECKED
+        FROM
+        (
+        WITH RECURSIVE cte AS (
+        SELECT A .us_uuid,A .us_name,A .us_code,A .us_father_uuid
+        FROM use_scope A
+        <if test="null != usName">
+            WHERE
+            (
+            A .us_uuid IN (
+            SELECT
+            sr_uuid
+            FROM
+            authority
+            WHERE
+            ri_uuid = #{riUuid,jdbcType=VARCHAR}
+            AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+            )
+            OR A .us_name LIKE CONCAT('%','${usName}','%' )
+            )
+        </if>
+        UNION
+        SELECT
+        K .us_uuid,
+        K .us_name,
+        K .us_code,
+        K .us_father_uuid
+        FROM
+        use_scope K
+        INNER JOIN cte C ON C .us_uuid = K .us_father_uuid
+        ) SELECT
+        us_uuid,
+        us_name,
+        us_code,
+        us_father_uuid
+        FROM
+        cte
+        UNION
+        (
+        WITH RECURSIVE tmp AS (
+        SELECT
+        A .us_uuid,
+        A .us_name,
+        A .us_code,
+        A .us_father_uuid
+        FROM
+        use_scope A
+        <if test="null != usName">
+            WHERE
+            (
+            A .us_uuid IN (
+            SELECT
+            sr_uuid
+            FROM
+            authority
+            WHERE
+            ri_uuid = #{riUuid,jdbcType=VARCHAR}
+            AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+            )
+            OR A .us_name LIKE CONCAT('%','${usName}','%' )
+            )
+        </if>
+        UNION
+        SELECT
+        K .us_uuid,
+        K .us_name,
+        K .us_code,
+        K .us_father_uuid
+        FROM
+        use_scope K
+        INNER JOIN tmp C ON C .us_father_uuid = K .us_uuid
+        ) SELECT
+        us_uuid,
+        us_name,
+        us_code,
+        us_father_uuid
+        FROM
+        tmp
+        )
+        ) B ORDER BY checked desc
+    </select>
+
+
+    <select id="queryServiceResourceTreeByRiUuid" parameterType="java.lang.String" resultMap="SrTreeVOMap">
+        SELECT B.sr_uuid,B.sr_name,
+        (
+        CASE WHEN B.sr_father_uuid IS NULL THEN '2'
+        ELSE
+        B.sr_father_uuid
+        END
+        ) AS pUuid,
+        (
+        CASE WHEN B .sr_uuid IN (
+        SELECT sr_uuid FROM authority WHERE ri_uuid = #{riUuid,jdbcType=VARCHAR} AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+        ) THEN 'true'
+        ELSE 'false'
+        END
+        ) AS CHECKED
+        FROM
+        (
+        WITH RECURSIVE cte AS (
+        SELECT A .sr_uuid,A .sr_name,A .sr_code,A .sr_father_uuid
+        FROM service_resource A
+        <if test="null != srName">
+            WHERE
+            (
+            A .sr_uuid IN (
+            SELECT
+            sr_uuid
+            FROM
+            authority
+            WHERE
+            ri_uuid = #{riUuid,jdbcType=VARCHAR}
+            AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+            )
+            OR A .sr_name LIKE CONCAT('%','${srName}','%' )
+            )
+        </if>
+        UNION
+        SELECT
+        K .sr_uuid,
+        K .sr_name,
+        K .sr_code,
+        K .sr_father_uuid
+        FROM
+        service_resource K
+        INNER JOIN cte C ON C .sr_uuid = K .sr_father_uuid
+        ) SELECT
+        sr_uuid,
+        sr_name,
+        sr_code,
+        sr_father_uuid
+        FROM
+        cte
+        UNION
+        (
+        WITH RECURSIVE tmp AS (
+        SELECT
+        A .sr_uuid,
+        A .sr_name,
+        A .sr_code,
+        A .sr_father_uuid
+        FROM
+        service_resource A
+        <if test="null != srName">
+            WHERE
+            (
+            A .sr_uuid IN (
+            SELECT
+            sr_uuid
+            FROM
+            authority
+            WHERE
+            ri_uuid = #{riUuid,jdbcType=VARCHAR}
+            AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+            )
+            OR A .sr_name LIKE CONCAT('%','${srName}','%' )
+            )
+        </if>
+        UNION
+        SELECT
+        K .sr_uuid,
+        K .sr_name,
+        K .sr_code,
+        K .sr_father_uuid
+        FROM
+        service_resource K
+        INNER JOIN tmp C ON C .sr_father_uuid = K .sr_uuid
+        ) SELECT
+        sr_uuid,
+        sr_name,
+        sr_code,
+        sr_father_uuid
+        FROM
+        tmp
+        )
+        ) B ORDER BY checked desc
+    </select>
+
+    <!-- 服务使用者的查询资源数结构 -->
+    <select id="querySuUseScopeTreeByRiUuid" parameterType="java.lang.String" resultMap="UseScopeTreeVOMap">
+        SELECT B.us_uuid,B.us_name,
+        (
+        CASE WHEN B.us_father_uuid IS NULL THEN '1'
+        ELSE
+        B.us_father_uuid
+        END
+        ) AS pUuid,
+        (
+        CASE WHEN B .us_uuid IN (
+        SELECT sr_uuid FROM authority WHERE ri_uuid = #{riUuid,jdbcType=VARCHAR} AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+        ) THEN 'true'
+        ELSE 'false'
+        END
+        ) AS CHECKED
+        FROM
+        (
+        WITH RECURSIVE cte AS (
+        SELECT A .us_uuid,A .us_name,A .us_code,A .us_father_uuid
+        FROM use_scope A
+        <if test="null != usName">
+            WHERE
+            (
+            A .us_uuid IN (
+            SELECT
+            sr_uuid
+            FROM
+            authority
+            WHERE
+            ri_uuid = #{riUuid,jdbcType=VARCHAR}
+            AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+            )
+            OR (A .us_name LIKE CONCAT('%','${usName}','%' ) and us_uuid in
+            (
+            select sr_uuid from authority where ri_uuid in
+            (select ri_uuid from user_role_info where ui_uuid = #{loginUiUuid,jdbcType=VARCHAR})
+            -- 					and a_operate_level = 'select'
+            )
+            )
+            )
+        </if>
+        <if test="null == usName">
+            where us_uuid in
+            (
+            select sr_uuid from authority where ri_uuid in
+            (select ri_uuid from user_role_info where ui_uuid = #{loginUiUuid,jdbcType=VARCHAR})
+            -- 			and a_operate_level = 'select'
+            )
+        </if>
+        UNION
+        SELECT
+        K .us_uuid,
+        K .us_name,
+        K .us_code,
+        K .us_father_uuid
+        FROM
+        use_scope K
+        INNER JOIN cte C ON C .us_uuid = K .us_father_uuid
+        ) SELECT
+        us_uuid,
+        us_name,
+        us_code,
+        us_father_uuid
+        FROM
+        cte
+        UNION
+        (
+        WITH RECURSIVE tmp AS (
+        SELECT
+        A .us_uuid,
+        A .us_name,
+        A .us_code,
+        A .us_father_uuid
+        FROM
+        use_scope A
+        <if test="null != usName">
+            WHERE
+            (
+            A .us_uuid IN (
+            SELECT
+            sr_uuid
+            FROM
+            authority
+            WHERE
+            ri_uuid = #{riUuid,jdbcType=VARCHAR}
+            AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+            )
+            OR (A .us_name LIKE CONCAT('%','${usName}','%' )
+            and us_uuid in
+            (
+            select sr_uuid from authority where ri_uuid in
+            (select ri_uuid from user_role_info where ui_uuid = #{loginUiUuid,jdbcType=VARCHAR})
+            -- 					and a_operate_level = 'select'
+            )
+            )
+            )
+        </if>
+        <if test="null == usName">
+            where us_uuid in
+            (
+            select sr_uuid from authority where ri_uuid in
+            (select ri_uuid from user_role_info where ui_uuid = #{loginUiUuid,jdbcType=VARCHAR})
+            -- 			and a_operate_level = 'select'
+            )
+        </if>
+        UNION
+        SELECT
+        K .us_uuid,
+        K .us_name,
+        K .us_code,
+        K .us_father_uuid
+        FROM
+        use_scope K
+        INNER JOIN tmp C ON C .us_father_uuid = K .us_uuid
+        ) SELECT
+        us_uuid,
+        us_name,
+        us_code,
+        us_father_uuid
+        FROM
+        tmp
+        )
+        ) B ORDER BY checked desc
+    </select>
+
+
+    <select id="querySuServiceResourceTreeByRiUuid" parameterType="java.lang.String" resultMap="SrTreeVOMap">
+        SELECT B.sr_uuid,B.sr_name,
+        (
+        CASE WHEN B.sr_father_uuid IS NULL THEN '2'
+        ELSE
+        B.sr_father_uuid
+        END
+        ) AS pUuid,
+        (
+        CASE WHEN B .sr_uuid IN (
+        SELECT sr_uuid FROM authority WHERE ri_uuid = #{riUuid,jdbcType=VARCHAR} AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+        ) THEN 'true'
+        ELSE 'false'
+        END
+        ) AS CHECKED
+        FROM
+        (
+        WITH RECURSIVE cte AS (
+        SELECT A .sr_uuid,A .sr_name,A .sr_code,A .sr_father_uuid
+        FROM service_resource A
+        <if test="null != srName">
+            WHERE
+            (
+            A .sr_uuid IN (
+            SELECT
+            sr_uuid
+            FROM
+            authority
+            WHERE
+            ri_uuid = #{riUuid,jdbcType=VARCHAR}
+            AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+            )
+            OR (A .sr_name LIKE CONCAT('%','${srName}','%' )
+            and sr_uuid in
+            (
+            select sr_uuid from authority where ri_uuid in
+            (select ri_uuid from user_role_info where ui_uuid = #{loginUiUuid,jdbcType=VARCHAR})
+            -- 					and a_operate_level = 'select'
+            )
+            )
+            )
+        </if>
+        <if test="null == srName">
+            where sr_uuid in
+            (
+            select sr_uuid from authority where ri_uuid in
+            (select ri_uuid from user_role_info where ui_uuid = #{loginUiUuid,jdbcType=VARCHAR})
+            -- 			and a_operate_level = 'select'
+            )
+        </if>
+        UNION
+        SELECT
+        K .sr_uuid,
+        K .sr_name,
+        K .sr_code,
+        K .sr_father_uuid
+        FROM
+        service_resource K
+        INNER JOIN cte C ON C .sr_uuid = K .sr_father_uuid
+        ) SELECT
+        sr_uuid,
+        sr_name,
+        sr_code,
+        sr_father_uuid
+        FROM
+        cte
+        UNION
+        (
+        WITH RECURSIVE tmp AS (
+        SELECT
+        A .sr_uuid,
+        A .sr_name,
+        A .sr_code,
+        A .sr_father_uuid
+        FROM
+        service_resource A
+        <if test="null != srName">
+            WHERE
+            (
+            A .sr_uuid IN (
+            SELECT
+            sr_uuid
+            FROM
+            authority
+            WHERE
+            ri_uuid = #{riUuid,jdbcType=VARCHAR}
+            AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+            )
+            OR (A .sr_name LIKE CONCAT('%','${srName}','%' )
+            and sr_uuid in
+            (
+            select sr_uuid from authority where ri_uuid in
+            (select ri_uuid from user_role_info where ui_uuid = #{loginUiUuid,jdbcType=VARCHAR})
+            -- 					and a_operate_level = 'select'
+            )
+            )
+            )
+        </if>
+        <if test="null == srName">
+            where sr_uuid in
+            (
+            select sr_uuid from authority where ri_uuid in
+            (select ri_uuid from user_role_info where ui_uuid = #{loginUiUuid,jdbcType=VARCHAR})
+            -- 			and a_operate_level = 'select'
+            )
+        </if>
+        UNION
+        SELECT
+        K .sr_uuid,
+        K .sr_name,
+        K .sr_code,
+        K .sr_father_uuid
+        FROM
+        service_resource K
+        INNER JOIN tmp C ON C .sr_father_uuid = K .sr_uuid
+        ) SELECT
+        sr_uuid,
+        sr_name,
+        sr_code,
+        sr_father_uuid
+        FROM
+        tmp
+        )
+        ) B ORDER BY checked desc
+    </select>
+</mapper>

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tingbei.common.repository.AuthorityRepository">
-
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into authority (a_uuid,ri_uuid, sr_uuid, sr_type, a_operate_level, identity_code, area_code)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.aUuid},#{item.riUuid}, #{item.srUuid},#{item.srType},#{item.aOperateLevel},
+            #{item.identityCode}, #{item.areaCode})
+        </foreach>
+    </insert>
 
 </mapper>

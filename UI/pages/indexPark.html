@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Parking System</title>
+
+    <script type="text/javascript" src="../JS/Jquery/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript" src="../JS/commonCssJs.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../css/framecss.css">
+    <link rel="stylesheet" type="text/css" href="../JS/jAlert/jquery.alerts.css">
+
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/htmleaf-demo.css">
+    <link rel="stylesheet" type="text/css" href="../dist/sidebar-menu.css">
+    <link rel="stylesheet" type="text/css" href="../iconfont/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../lib/icheck/blue.css">
+    <link rel="stylesheet" type="text/css" href="../lib/navigation/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="../lib/navigation/font/iconfont.css">
+
+    <!-- js资源文件 -->
+    <script type="text/javascript" src="../JS/serverUrlConfig.js"></script>
+
+    <script type="text/javascript" src="../JS/jAlert/jquery.alerts.js"></script>
+    <script type="text/javascript" src="../JS/Jquery/jquery.base64.js"></script>
+    <script type="text/javascript" src="../JS/moment.js"></script>
+    <script type="text/javascript" src="../JS/commonPark.js"></script>
+    <script type="text/javascript" src="../JS/indexFrame.js"></script>
+    <script type="text/javascript" src="../lib/icheck/icheck.min.js"></script>
+
+    <style type="text/css">
+        .main-sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            min-height: 100%;
+            width: 220px;
+            z-index: 810;
+            background-color: #2A58AD;
+        }
+    </style>
+
+    <!-- 字体图标 -->
+    <link rel="stylesheet" type="text/css" href="../lib/linearicons/style.css" />
+    <link rel="stylesheet" type="text/css" href="../lib/font-awesome-4.7.0/css/font-awesome.css" />
+
+
+</head>
+<body>
+<div id="bootPage-bg" class="shade-div">
+</div>
+<div  id="bootPage-main" style="display:none; height: 100%;width: 100%; position: fixed; z-index: 1000;padding: 2%;min-height: 600px;">
+    <div id="bootPageDiv"  style="height: 100%;background-color: white;border-radius: 10px;box-shadow: #868383 5px 5px 20px 5px"></div>
+</div>
+<div id="shade-div" class="shade-div">
+    <img src="../images/backdrop.gif" id="shade-icon" class="shade-icon">
+    <div id="shade-contents" class="shade-contents"> 导出中，请勿关闭页面……</div>
+</div>
+<div style="background: #1C2836;position:fixed;height:50px;top: 0;left: 0;bottom: 0;z-index: 999;width:100%;">
+    <div class="logo_ting"></div>
+    <header class="htmleaf-header">
+        <!-- header -->
+        <div class="index_welcome" >
+            <div class="index_welcome_content"></div>
+            <div class="index_welcome_user">
+                <span id="loginname"></span>
+                <br/><span style="font-size: 13px;color: #8a7e52;">欢迎登录</span>
+                <input type="hidden" id="userName">
+            </div>
+            <!--<a class="index_user_menu"></a>-->
+            <img src="../images/logout.png" style="margin-top: 10px;margin-left: 10px;cursor: pointer;" class="btn-logout">
+            <div class="clear"></div>
+        </div>
+    </header>
+</div>
+
+<div class="nav-div">
+    <ul class="nav-ul">
+
+    </ul>
+</div>
+<div class="nav-right">
+    <div class="nav-right-title"></div>
+</div>
+
+<div id="index_content" class="index_content" style="overflow-x: hidden;"></div>
+<div class="nav-menu-push nav-menu-operation"><img src="../images/left.png"></div>
+
+
+<div class="dialog-wrap-info" id="register_fail_dialog"></div>
+<div class="content-wrap-info" id="register_fail_wrap">
+
+    <div class="body-wrap-info">
+        <img src="../images/register-no.png" style="height: 60px; margin-top: 18px;">
+        <div style="font-size: 16px;color: #f77f5c;font-weight: 600;" id="fail_title">模拟登录失败</div>
+        <div style="font-size: 12px;" id="fail_message">您可以稍后重新操作</div>
+    </div>
+    <div class="footer-wrap-info">
+        <button class="btn_common-info btn_common__primary" style="color: #ffffff;background-color: #f77f5c" onclick="closefaildialog()">确定</button>
+    </div>
+</div>
+<script src="../dist/sidebar-menu.js"></script>
+<script src="../JS/menu-adapt.js"></script>
+<script>
+
+</script>
+</body>
+</html>

@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * 保存用户角色信息请求实体
+ * Created by JJH on 2017/12/22.
+ * @author JJH
  */
 @Data
 public class SaveUserRoleRequestVO implements Serializable{

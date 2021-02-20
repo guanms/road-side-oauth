@@ -1,5 +1,5 @@
 var tableOption = {
-	url: config.oauthUrl+"/v1.0/dc/role/pageQueryAll",
+	url: oauthUrl+"/v1.0/oauth2Server/role/pageQueryAll",
 	method: "post",
 	pageList: [5, 10, 25, 50, 100],
 	queryParamsType: 'not limit',
@@ -29,10 +29,10 @@ var tableOption = {
 		sortable: true,
 		width: '200px'
 	}, {
-		field: 'riLevel',
-		title: '是否系统级别',
-		width: '200px'
-	}, {
+	// 	field: 'riLevel',
+	// 	title: '是否系统级别',
+	// 	width: '200px'
+	// }, {
 		field: 'riUuid',
 		title: '唯一序列',
 		visible: false,
@@ -44,7 +44,7 @@ var tableOption = {
 			'click .update': function(e, value, row, index) {
 				$("#riRoleName").val(row.riRoleName);
 				$("#riRoleDesc").val(row.riRoleDesc);
-				$("#riLevel").val(row.riLevel);
+				// $("#riLevel").val(row.riLevel);
 				$("#riUuid").val(row.riUuid);
 				showDialog();
 			},
@@ -82,7 +82,7 @@ function responseHandler(resultData) {
 				roles["id"] = parseInt(i) + 1;
 				roles["riRoleName"] = result[i]["riRoleName"];
 				roles["riRoleDesc"] = result[i]["riRoleDesc"];
-				roles["riLevel"] = result[i]["riLevel"];
+				// roles["riLevel"] = result[i]["riLevel"];
 				roles["riUuid"] = result[i]["riUuid"];
 				roles["operation"] = btnShow(result[i]["riUuid"]);
 
@@ -181,15 +181,12 @@ function query() {
 	$('#roleInfoTable').bootstrapTable(tableOption);
 }
 
-function showEditDialog() {
-	alert("点击了");
-}
 
 function showDeleteDialog(id) {
 	showDialog3();
 	$("#deleteRoleInfoBtn").click(function() {
 		$.ajax({
-			url: config.oauthUrl+ "/v1.0/dc/role/delete",
+			url: oauthUrl+ "/v1.0/oauth2Server/role/delete",
 			type: "POST",
 			data: {
 				"riUuid": id
@@ -221,7 +218,7 @@ function saveRoleInfo() {
 		var riUuid = $("#riUuid").val();
 		if(riUuid == null || riUuid == '' || riUuid == undefined) {
 			$.ajax({
-				url: config.oauthUrl+ "/v1.0/dc/role/save",
+				url: oauthUrl+ "/v1.0/oauth2Server/role/save",
 				headers: {
 					"content-Type": "application/json", // important
 				},
@@ -243,7 +240,7 @@ function saveRoleInfo() {
 		} else {
 			data.riUuid = $("#riUuid").val();
 			$.ajax({
-				url: config.oauthUrl+"/v1.0/dc/role/modify",
+				url: oauthUrl+"/v1.0/oauth2Server/role/modify",
 				headers: {
 					"content-Type": "application/json", // important
 				},
@@ -304,7 +301,7 @@ function checkRiNameCanUse(riUuid, riRoleName) {
 		redisId: sessionStorage.getItem("redisId")
 	};
 	$.ajax({
-		url: config.oauthUrl + "/v1.0/dc/role/canUse",
+		url: oauthUrl + "/v1.0/oauth2Server/role/canUse",
 		type: "post",
 		data: JSON.stringify(data),
 		contentType: "application/json",
@@ -408,7 +405,7 @@ function saveAuthority(type) {
 
 	$.ajax({
 		type: "post",
-		url: config.oauthUrl+"/v1.0/dc/role/saveAuthority",
+		url: oauthUrl+"/v1.0/oauth2Server/role/saveAuthority",
 		headers: {
 			'Content-Type': 'application/json'
 		},
@@ -473,7 +470,7 @@ var srTreeNodes = []; // 服务资源nodes
 function refreshzNodes(riUuid) {
 	$.ajax({
 		type: "post",
-		url: config.oauthUrl+"/v1.0/dc/role/resourceTree/useScope",
+		url: oauthUrl+"/v1.0/oauth2Server/role/resourceTree/useScope",
 		async: false,
 		data: {
 			riUuid: riUuid,
@@ -497,7 +494,7 @@ function refreshzNodes(riUuid) {
 function refreshServiceTreeNodes(riUuid) {
 	$.ajax({
 		type: "post",
-		url: config.oauthUrl+"/v1.0/dc/role/resourceTree/serviceResource",
+		url: oauthUrl+"/v1.0/oauth2Server/role/resourceTree/serviceResource",
 		async: false,
 		data: {
 			riUuid: riUuid,

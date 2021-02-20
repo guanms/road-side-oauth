@@ -1,16 +1,32 @@
 server:
   port: 12000
 spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/oauth
+    username: postgres
+    password: postgres
+    hikari:
+      maximum-pool-size: 50
+      auto-commit: false
+      idle-timeout: 180000
+      max-lifetime: 300000
+      minimum-idle: 5
+  redis:
+    cluster:
+      nodes: 47.103.72.44:7000,47.103.72.44:7001,47.103.72.44:7002,47.103.72.44:7003,47.103.72.44:7004,47.103.72.44:7005
   cloud:
     zookeeper:
-      connect-string: 47.103.72.44:2181
       discovery:
-        root: /oauth/jxw/service/@project.version@
+        root: /authorityCenter/dev_gms/service/@project.version@
+      connect-string:  47.103.72.44:2181
+
 
 logging:
-  level: debug
-  file:
-    path: E:\\Cache\\Logs\\oauthZuul
+  level:
+    com.vapor.repository: DEBUG
+  path: /tmp/logs/authorityCenter/oauth2
+
 
 #spring-sercurity-oauth 请求授权url
 oauth:

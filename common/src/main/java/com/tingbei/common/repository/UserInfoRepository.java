@@ -55,5 +55,25 @@ public interface UserInfoRepository extends Mapper<UserInfo> {
      */
     List<UserInfoVO> queryAuditedUserInfoByUserNameFuzzy(@Param("userName") String userName,@Param("attribute") String attribute,@Param("createMan") String createMan);
 
+
     List<UserInfo> findUserInfosByUuids(List<String> list);
+
+
+    /**
+     * 检查userName是否重名
+     * @param userName 用户名
+     * @param uiUuid 主键
+     * @return 返回
+     */
+    List<UserInfo> checkUserNameCanUse(@Param("userName") String userName,@Param("uiUuid") String uiUuid);
+
+    /**
+     * 检查loginName是否重复
+     * @param loginName 名
+     * @param uiUuid 建
+     * @return 返回
+     */
+    List<UserInfo> checkLoginNameCanUse(@Param("loginName") String loginName,@Param("uiUuid") String uiUuid);
+
+
 }

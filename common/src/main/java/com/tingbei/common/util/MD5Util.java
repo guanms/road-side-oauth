@@ -2,9 +2,7 @@ package com.tingbei.common.util;
 
 import org.springframework.stereotype.Component;
 
-/**
- * Created by GuisenChen on 2015/12/16.
- */
+
 @Component
 public class MD5Util {
     static final int S11 = 7;

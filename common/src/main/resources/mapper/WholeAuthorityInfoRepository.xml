@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tingbei.common.repository.WholeAuthorityInfoRepository">
+    <resultMap id="AuthorityVOMap" type="com.tingbei.common.vo.AuthorityVO">
+        <id column="a_uuid" property="aUuid" jdbcType="VARCHAR"/>
+        <result column="ri_uuid" property="riUuid" jdbcType="VARCHAR"/>
+        <result column="sr_uuid" property="srUuid" jdbcType="VARCHAR"/>
+        <result column="sr_type" property="srType" jdbcType="VARCHAR"/>
+        <result column="a_operate_level" property="aOperateLevel" jdbcType="VARCHAR"/>
+        <result column="identity_code" property="identityCode" jdbcType="VARCHAR"/>
+        <result column="area_code" property="areaCode" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="UseScopeVOMap" type="com.tingbei.common.vo.UseScopeVO">
+        <result column="us_uuid" property="usUuid" jdbcType="VARCHAR"/>
+        <result column="us_name" property="usName" jdbcType="VARCHAR"/>
+        <result column="us_code" property="usCode" jdbcType="VARCHAR"/>
+        <result column="us_type" property="usType" jdbcType="VARCHAR"/>
+        <result column="us_level" property="usLevel" jdbcType="BIGINT"/>
+        <result column="us_father_uuid" property="usFatherUuid" jdbcType="VARCHAR"/>
+        <result column="a_operate_level" property="operateLevel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ServiceResourceVOMap" type="com.tingbei.common.vo.ServiceResourceVO">
+        <result column="sr_uuid" property="srUuid" jdbcType="VARCHAR"/>
+        <result column="sr_name" property="srName" jdbcType="VARCHAR"/>
+        <result column="sr_code" property="srCode" jdbcType="VARCHAR"/>
+        <result column="sr_version" property="srVersion" jdbcType="VARCHAR"/>
+        <result column="sr_type" property="srType" jdbcType="VARCHAR"/>
+        <result column="sr_level" property="srLevel" jdbcType="BIGINT"/>
+        <result column="sr_url" property="srUrl" jdbcType="VARCHAR"/>
+        <result column="sr_father_uuid" property="srFatherUuid" jdbcType="VARCHAR"/>
+        <result column="a_operate_level" property="operateLevel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="queryInfoFromAuthAndTactics" parameterType="java.lang.String" resultMap="AuthorityVOMap">
+        SELECT
+            *
+        FROM
+            authority
+        WHERE
+            ri_uuid = #{riUuid}
+        UNION
+            SELECT
+                *
+            FROM
+                authority_tactics
+            WHERE
+                ri_uuid = #{riUuid}
+    </select>
+    
+    
+    <select id="queryUsInfoFromAuthByRiUuid" parameterType="java.lang.String" resultMap="UseScopeVOMap">
+        SELECT
+            b.us_uuid,
+            b.us_name,
+            b.us_code,
+            b.us_type,
+            b.us_level,
+            b.us_father_uuid,
+            a.a_operate_level
+        from
+        (select sr_uuid,a_operate_level from authority where ri_uuid = #{riUuid,jdbcType=VARCHAR} and sr_type = 'scope'
+        UNION select sr_uuid,at_operate_level from authority_tactics where ri_uuid = #{riUuid,jdbcType=VARCHAR} and sr_type = 'scope') a
+        LEFT JOIN use_scope b ON a.sr_uuid = b.us_uuid
+    </select>
+
+
+    <select id="querySrInfoFromAuthByRiUuid" parameterType="java.lang.String" resultMap="ServiceResourceVOMap">
+        SELECT
+        b.sr_uuid,
+        b.sr_name,
+        b.sr_code,
+        b.sr_version,
+        b.sr_type,
+        b.sr_level,
+        b.sr_url,
+        b.sr_father_uuid,
+        a.a_operate_level
+        from
+        (select sr_uuid,a_operate_level from authority where ri_uuid = #{riUuid,jdbcType=VARCHAR} and sr_type = 'service'
+        UNION select sr_uuid,at_operate_level from authority_tactics where ri_uuid = #{riUuid,jdbcType=VARCHAR} and sr_type = 'service') a
+        LEFT JOIN service_resource b ON a.sr_uuid = b.sr_uuid
+    </select>
+</mapper>

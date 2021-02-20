@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tingbei.common.repository.WholeResourceRepository">
+    <resultMap id="ExtendUseScopeVoMap" type="com.tingbei.common.vo.userresource.ExtendUseScopeVo">
+        <result column="us_uuid" property="usUuid" jdbcType="VARCHAR"/>
+        <result column="us_name" property="usName" jdbcType="VARCHAR"/>
+        <result column="us_code" property="usCode" jdbcType="VARCHAR"/>
+        <result column="us_desc" property="udDesc" jdbcType="VARCHAR"/>
+        <result column="us_provider" property="usProvider" jdbcType="VARCHAR"/>
+        <result column="us_type" property="usType" jdbcType="VARCHAR"/>
+        <result column="us_level" property="usLevel" jdbcType="BIGINT"/>
+        <result column="us_father_uuid" property="usFatherUuid" jdbcType="VARCHAR"/>
+        <result column="us_status" property="usStatus" jdbcType="VARCHAR"/>
+        <result column="us_create_time" property="usCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="us_create_man" property="usCreateMan" jdbcType="VARCHAR"/>
+        <result column="a_operate_level" property="operateLevel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ExtendServiceResourceVoMap" type="com.tingbei.common.vo.userresource.ExtendServiceResourceVo">
+        <result column="sr_uuid" property="srUuid" jdbcType="VARCHAR"/>
+        <result column="sr_name" property="srName" jdbcType="VARCHAR"/>
+        <result column="sr_code" property="srCode" jdbcType="VARCHAR"/>
+        <result column="sr_provider" property="srProvider" jdbcType="VARCHAR" />
+        <result column="sr_status" property="srStatus" jdbcType="VARCHAR" />
+        <result column="sr_desc" property="srDesc" jdbcType="VARCHAR" />
+        <result column="sr_version" property="srVersion" jdbcType="VARCHAR"/>
+        <result column="sr_activeDate" property="srActiveDate" jdbcType="TIMESTAMP" />
+        <result column="sr_type" property="srType" jdbcType="VARCHAR"/>
+        <result column="sr_level" property="srLevel" jdbcType="BIGINT"/>
+        <result column="sr_url" property="srUrl" jdbcType="VARCHAR"/>
+        <result column="sr_father_uuid" property="srFatherUuid" jdbcType="VARCHAR"/>
+        <result column="sr_create_time" property="srCreateTime" jdbcType="TIMESTAMP" />
+        <result column="sr_create_man" property="srCreateMan" jdbcType="VARCHAR" />
+        <result column="a_operate_level" property="operateLevel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findScopeFromAuthAndTactices" parameterType="java.lang.String" resultMap="ExtendUseScopeVoMap">
+        SELECT
+             *,
+            #{operateLevel,jdbcType=VARCHAR} as a_operate_level
+        FROM
+            use_scope
+        WHERE
+            us_uuid IN (
+                SELECT
+                    sr_uuid
+                FROM
+                    authority
+                WHERE
+                    ri_uuid IN
+                    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+                        #{item, jdbcType=VARCHAR}
+                    </foreach>
+                AND sr_type = 'scope'
+                AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+                UNION
+                SELECT
+                    sr_uuid
+                FROM
+                    authority_tactics
+                WHERE
+                    ri_uuid IN
+                    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+                        #{item, jdbcType=VARCHAR}
+                    </foreach>
+                AND sr_type = 'scope'
+                AND at_operate_level = #{operateLevel,jdbcType=VARCHAR}
+            )
+        ORDER BY us_father_uuid desc
+    </select>
+
+    <select id="findServiceResFromAuthAndTactices" parameterType="java.lang.String" resultMap="ExtendServiceResourceVoMap">
+        SELECT
+        *,
+        #{operateLevel,jdbcType=VARCHAR} as a_operate_level
+        FROM
+        service_resource
+        WHERE
+        sr_uuid IN (
+        SELECT
+        sr_uuid
+        FROM
+        authority
+        WHERE
+        ri_uuid IN
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item, jdbcType=VARCHAR}
+        </foreach>
+        AND sr_type = 'service'
+        AND a_operate_level = #{operateLevel,jdbcType=VARCHAR}
+        UNION
+        SELECT
+        sr_uuid
+        FROM
+        authority_tactics
+        WHERE
+        ri_uuid IN
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item, jdbcType=VARCHAR}
+        </foreach>
+        AND sr_type = 'service'
+        AND at_operate_level = #{operateLevel,jdbcType=VARCHAR}
+        )
+        ORDER BY sr_sort asc,sr_level asc
+    </select>
+</mapper>

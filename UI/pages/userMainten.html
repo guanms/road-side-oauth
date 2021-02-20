@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户管理</title>
+		<link href="../oauth-signup-1.1/lib/bootstrap-table/css/bootstrap-table.css" rel="stylesheet" />
+		<link href="../oauth-signup-1.1/css/newdialog.css" rel="stylesheet" />
+		<link href="../oauth-signup-1.1/css/common.css" rel="stylesheet" />
+		<script src="../oauth-signup-1.1/lib/bootstrap-table/js/bootstrap-table.js"></script>
+		<script src="../oauth-signup-1.1/lib/bootstrap-table/js/bootstrap-table-zh-CN.js"></script>
+		<script type="text/javascript" src="../oauth-signup-1.1/js/config.js"></script>
+		<script src="../oauth-signup-1.1/js/userinfo/userMainten.js"></script>
+	</head>
+
+	<body>
+		<div class="row navbars" style="margin-top: 20px;margin-left: 30px;margin-right: 40px;">
+			<div id="upgradeMenu" class="col-xs-12">
+				<div class="navbars_nav">
+					<span>用户管理</span>
+				</div>
+			</div>
+		</div>
+		<!-- table -->
+		<div class="row" style="margin-left: 40px;margin-right: 40px;">
+			<br />
+			<form class="navbar-form navbar-left" style="padding: 2px 0 8px 0;">
+				<div class="input-group">
+					<input type="text" value="" class="form-control" placeholder="用户名称" id="userNameParam">
+					<span class="input-group-btn"><button type="button" class="btn" onclick="findByUserNameFuzz()"><span class="lnr lnr-arrow-right"></span></button>
+					</span>
+				</div>
+				<button type='button' class='btn btn-success member-op-btn' style='display:inline-block' onclick="btnClickaddWebUser()">
+				<span class='glyphicon glyphicon-plus'></span>&nbsp;增加
+				</button>
+			</form>
+			<div class="member-table-div">
+				<table id="userInfoTable" class="table table-hover member-table goods-info-table myselfTable" style="font-size: 13px;table-layout:fixed"></table>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="dialog-wrap" id="add_dialog-wrap" onClick="hideAddDialog()"></div>
+		<div class="modal-dialog content-wrap" id="add_content-wrap" role="document">
+			<div class="modal-content" style="border: 0px">
+				<div class="modal-header"style="background-color: #00C0D7;color: #fff;border-top-left-radius: 6px;border-top-right-radius: 6px;">
+					<!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+					<h4 class="modal-title" id="myModalLabel">信息</h4>
+				</div>
+				<div class="modal-body">
+					<div style="padding: 10px 100px 10px;">
+						<form class="bs-example bs-example-form" role="form" id="myModal">
+							<div class="input-group">
+								<span class="input-group-addon ">用户名称</span>
+								<input type="text" class="form-control" id="regUserName">
+							</div>
+							<div><span class="text-danger"></span></div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon ">登录账号</span>
+								<input type="text" class="form-control" id="loginName">
+							</div>
+							<div><span class="text-danger"></span></div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon">登录密码</span>
+								<input type="password" class="form-control" id="password">
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon">用户类型</span>
+								<select id="userType" class="form-control">
+									<!-- 1：系统级别不可删除    2：非系统级别可以删除 -->
+									<option value='web' selected="selected">网页</option>
+								</select>
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon">用户属性</span>
+								<select id="userAttribute" class="form-control">
+									<!-- 1：系统级别不可删除    2：非系统级别可以删除 -->
+									<option value='SU' selected="selected">服务使用者</option>
+								</select>
+							</div>
+							<input type="text" id="uiUuid" hidden/>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="saveUserInfo()">增加</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hideAddDialog()">取消</button>
+				</div>
+			</div>
+		</div>
+		
+		<!--2、start删除确认框-->
+		<div class="dialog-wrap2" onClick="hideDialog2()"></div>
+		<div class="modal-dialog content-wrap2 content-wrap-add2">
+			<div class="modal-content">
+				<div class="header-wrap header-del">
+					<label class="del">确认删除？</label>
+					<label class="close-btn" onClick="hideDialog3()">X</label>
+				</div>
+				<div class="body-wrap body-del">
+					<div class="content-item content-item-add">
+						<label class="delete-lab">确认删除？</label>
+					</div>
+				</div>
+				<input type="text" id="delUuid" hidden/>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="deleteUserInfo()">确定</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hideDialog2()">取消</button>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

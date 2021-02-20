@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户角色管理页面</title>
+		<link href="../oauth-signup-1.1/lib/bootstrap-table/css/bootstrap-table.css" rel="stylesheet" />
+		<link href="../oauth-signup-1.1/css/common.css" rel="stylesheet" />
+		<link href="../oauth-signup-1.1/css/newdialog.css" rel="stylesheet" />
+		<script src="../oauth-signup-1.1/lib/bootstrap-table/js/bootstrap-table.js"></script>
+		<script src="../oauth-signup-1.1/lib/bootstrap-table/js/bootstrap-table-zh-CN.js"></script>
+		<script src="../oauth-signup-1.1/js/role/userRole.js"></script>
+	</head>
+
+	<body>
+		<div class="row navbars" style="margin-top: 20px;margin-left: 30px;margin-right: 40px;">
+			<div id="upgradeMenu" class="col-xs-12">
+				<div class="navbars_nav">
+					<span>用户角色</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="margin-left: 40px;margin-right: 40px;">
+			<br />
+			<form class="navbar-form navbar-left" style="padding: 2px 0 8px 0;">
+				<div class="input-group" style="margin-right: 13px;">
+					<input type="text" value="" class="form-control" placeholder="用户名称" id="queryUserName">
+					<span class="input-group-btn"><button type="button" class="btn" onclick="query()"><span class="lnr lnr-arrow-right"></span></button>
+					</span>
+				</div>
+				</button>
+			</form>
+			<div class="member-table-div">
+				<!--<table id="roleInfoTable" class="table table-hover staff-table" style="font-size: 13px;" style="font-size: 13px;table-layout:fixed"></table>-->
+				<table id="userRoleInfoTable" class="table table-hover member-table goods-info-table myselfTable" style="font-size: 13px;table-layout:fixed"></table>
+			</div>
+		</div>
+
+		<div class="dialog-wrap" onClick="hideDialog()"></div>
+		<div class="content-wrap modal-dialog" id="saveUserRoleDiv">
+			<div class="modal-content" style="border: 0px">
+				<div class="header-wrap">
+					<label style="font-size:17px;" id="myModalLabel">分配角色</label>
+				</div>
+				<div class="input-group" style="margin-top: 20px;padding: 5px;">
+					<input type="text" value="" class="form-control" placeholder="角色描述" id="riRoleDesc">
+					<span class="input-group-btn"><button type="button" class="btn" onclick="refreshRole()"><span class="lnr lnr-arrow-right"></span></button>
+					</span>
+				</div>
+				<div id="roleDiv" class="body-storage" style="margin-top: 20px;height: 400px;overflow: auto;">
+				</div>
+				<input type="hidden" id="uiUuid" />
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="saveUserRoleInfo()">确定</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hideDialog()">取消</button>
+				</div>
+				
+				<!--<div class="footer-wrap" style="padding: 20px 55px;margin-bottom: 30px;">
+					<button class="footer-btn cancel-btn" onClick="hideDialog()">取消</button>
+					<button class="footer-btn" id="saveAssignRoleBtn">保存</button>
+				</div>-->
+			</div>
+		</div>
+	</body>
+
+</html>

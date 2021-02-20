@@ -4,8 +4,11 @@ package com.tingbei.common.repository;/**
  */
 
 import com.tingbei.common.entity.Authority;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
 
 /**
  *@Author:JXW
@@ -14,4 +17,5 @@ import tk.mybatis.mapper.common.Mapper;
 @Repository
 public interface AuthorityRepository extends Mapper<Authority> {
 
+    int insertBatch(@Param("list") List<Authority> list);
 }

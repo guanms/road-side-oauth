@@ -13,8 +13,6 @@ ribbon:
   ConnectTimeout: 15000
   ReadTimeout: 60000
 
-server:
-  port: 12001
 spring:
   application:
-    name: oauthServer
+    name: oauth2Server

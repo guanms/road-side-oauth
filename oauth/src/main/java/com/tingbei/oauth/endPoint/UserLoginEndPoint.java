@@ -9,6 +9,7 @@ import com.tingbei.common.util.GenerateUtil;
 import com.tingbei.common.util.MD5Util;
 import com.tingbei.common.vo.*;
 import com.tingbei.common.vo.userresource.UserAndResourceVO;
+import com.tingbei.oauth.service.AuthorityService;
 import com.tingbei.oauth.service.OauthTokenRequestService;
 import com.tingbei.oauth.service.UserLoginService;
 import com.tingbei.oauth.util.AesUtil;
@@ -29,11 +30,16 @@ import java.util.concurrent.TimeUnit;
  *@Author:JXW
  *@Date:2021/2/19 13:16
  */
+
 @RestController
+@RequestMapping("/maintenance/page")
 public class UserLoginEndPoint {
 
     @Autowired
     private UserLoginService userLoginService;
+
+    @Autowired
+    private AuthorityService authorityService;
 
     @Autowired
     private OauthTokenRequestService oauthTokenRequestService;
@@ -52,7 +58,7 @@ public class UserLoginEndPoint {
     private Logger logger= LoggerFactory.getLogger(this.getClass());
 
     @CrossOrigin
-    @PostMapping("/UserLogin")
+    @PostMapping("/pageCarLogin")
     public ServiceResultVO userLogin(String loginName,String password){
         if (null == loginName || null == password || StringUtils.isBlank(loginName) || StringUtils.isBlank(password)) {
             //表单数据有误则还返回到登录页
@@ -83,7 +89,7 @@ public class UserLoginEndPoint {
                 AuthTokenInfo authTokenInfo = GetCommonPasswordToken(oauthTokenRequestVO);
                 if(null != authTokenInfo){
                     TokenAndResourceVo tokenAndResourceVo = new TokenAndResourceVo();
-                    UserAndResourceVO userAndResourceVO = this.checkAuthorityClient.noRoleCheckByLoginName(loginName);
+                    UserAndResourceVO userAndResourceVO = authorityService.queryUserAllResource(loginName);
                     tokenAndResourceVo.setAuthTokenInfo(authTokenInfo);
                     tokenAndResourceVo.setUserAndResourceVO(userAndResourceVO);
                     String redisKey = RedisPrefix.PAGE_LOGIN_USERINFO.getPrefix() + authTokenInfo.getAccess_token();
@@ -112,5 +118,46 @@ public class UserLoginEndPoint {
         return null;
     }
 
+    @CrossOrigin
+    @PostMapping("/login")
+    public ServiceResultVO pageLogin(String loginName,String password){
+        if (null == loginName || null == password || StringUtils.isBlank(loginName) || StringUtils.isBlank(password)) {
+            //表单数据有误则还返回到登录页
+            return this.generateUtil.generageServiceResultVO(false,null,"用户名密码不能为空",null);
+        }else {
+            //获取加密后的密码
+            password = md5Util.getMD5ofStr(password);
+            UserInfoVO userInfo = userLoginService.queryOneUserInfo(loginName,password);
+            if(null != userInfo){
+                // 用户名密码验证成功，1. 去请求token，2. 去跨服务调用鉴权，返回该用户的所有权限
+                OauthTokenRequestVO oauthTokenRequestVO = new OauthTokenRequestVO();
+
+                //根据用户名查询客户端信息
+//                OauthClientDetails oauthClientDetails = pageLoginService.queryClientInfo(userInfo.getIdentityCode());
+//                if(null != oauthClientDetails) {
+//                    oauthTokenRequestVO.setClientId(oauthClientDetails.getClientId());
+//                    oauthTokenRequestVO.setClientSecret(oauthClientDetails.getClientSecret());
+//                }
+                oauthTokenRequestVO.setClientId("ac");
+                oauthTokenRequestVO.setClientSecret("ac");
+                oauthTokenRequestVO.setUserName(loginName);
+                oauthTokenRequestVO.setPassword(password);
+                AuthTokenInfo authTokenInfo = GetCommonPasswordToken(oauthTokenRequestVO);
+                if(null != authTokenInfo){
+                    TokenAndResourceVo tokenAndResourceVo = new TokenAndResourceVo();
+                    UserAndResourceVO userAndResourceVO = authorityService.queryUserAllResource(loginName);
+                    tokenAndResourceVo.setAuthTokenInfo(authTokenInfo);
+                    tokenAndResourceVo.setUserAndResourceVO(userAndResourceVO);
+                    String redisKey = RedisPrefix.PAGE_LOGIN_USERINFO.getPrefix() + authTokenInfo.getAccess_token();
+                    this.redisTemplate.opsForValue().set(redisKey,tokenAndResourceVo,authTokenInfo.getExpires_in(), TimeUnit.SECONDS);
+                    return this.generateUtil.generageServiceResultVO(true,null,"登陆成功",tokenAndResourceVo);
+                }else {
+                    return this.generateUtil.generageServiceResultVO(false,null,"授权错误，请联系管理员",null);
+                }
+            }else {
+                return this.generateUtil.generageServiceResultVO(false,null,"用户名密码不正确",null);
+            }
+        }
+    }
 
 }

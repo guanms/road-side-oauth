@@ -1,9 +1,9 @@
 server:
-  port: 12000
+  port: 12001
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/oauth
+    url: jdbc:postgresql://localhost:5433/oauth
     username: postgres
     password: postgres
     hikari:
@@ -18,7 +18,7 @@ spring:
   cloud:
     zookeeper:
       discovery:
-        root: /authorityCenter/dev_gms/service/@project.version@
+        root: /authorityCenter/jxw/service/@project.version@
       connect-string:  47.103.72.44:2181
 
 

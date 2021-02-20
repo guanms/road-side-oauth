@@ -15,6 +15,35 @@
         <result column="area_code" property="areaCode" jdbcType="INTEGER"/>
     </resultMap>
 
+    <resultMap id="RoleInfoVOMap" type="com.tingbei.common.vo.RoleInfoVO">
+        <result column="ri_uuid" property="riUuid" jdbcType="VARCHAR"/>
+        <result column="ri_role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="ri_level" property="riLevel" jdbcType="VARCHAR"/>
+        <result column="ri_arrtibute" property="riArrtibute" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryInfoFromRoleAndTactics" parameterType="java.lang.String" resultMap="RoleInfoVOMap">
+        SELECT
+        ri_uuid,
+        ri_role_name,
+        ri_level,
+        ri_arrtibute
+        FROM
+        role_info
+        WHERE
+        ri_uuid = #{riUuid}
+        UNION
+        SELECT
+        rit_uuid,
+        rit_role_name,
+        rit_level,
+        rit_arrtibute
+        FROM
+        role_info_tactics
+        WHERE
+        rit_uuid = #{riUuid}
+    </select>
+
 <select id="selectByRoleDesc" parameterType="java.lang.String" resultMap="BaseRoleInfoMap">
     SELECT * FROM role_info
     WHERE 1=1

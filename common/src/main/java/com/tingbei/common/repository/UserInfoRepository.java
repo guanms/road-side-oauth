@@ -1,13 +1,15 @@
 package com.tingbei.common.repository;
 
+import com.tingbei.common.entity.UserInfo;
 import com.tingbei.common.vo.UserInfoVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
 @Repository
-public interface UserInfoRepository {
+public interface UserInfoRepository extends Mapper<UserInfo> {
 
     /**
      * 精确查询
@@ -52,4 +54,6 @@ public interface UserInfoRepository {
      * @return 返回
      */
     List<UserInfoVO> queryAuditedUserInfoByUserNameFuzzy(@Param("userName") String userName,@Param("attribute") String attribute,@Param("createMan") String createMan);
+
+    List<UserInfo> findUserInfosByUuids(List<String> list);
 }

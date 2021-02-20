@@ -22,6 +22,7 @@ import com.tingbei.common.vo.role.ResourceTreeVO;
 import com.tingbei.common.vo.role.RolePageQueryParam;
 import com.tingbei.common.vo.role.SaveRoleInfoRequestVO;
 import com.tingbei.oauth.service.RoleInfoService;
+import com.tingbei.oauth.service.UpdateUserResourceCacheService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +62,9 @@ public class RoleInfoServiceImpl implements RoleInfoService {
 
     @Autowired
     private ResourceTreeRepository resourceTreeRepository;
+
+    @Autowired
+    private UpdateUserResourceCacheService updateUserResourceCacheService;
 
     @Override
     public PageInfo<RoleInfo> pageQueryRoleInfo(RolePageQueryParam pageParam) {
@@ -181,7 +185,7 @@ public class RoleInfoServiceImpl implements RoleInfoService {
             lines += authorityRepository.insertBatch(list);
         }
         if(lines > 0){
-            upUserResourceCacheService.upUserResCacheByRiuuidOrUiuuid(riUuid,null);
+            updateUserResourceCacheService.updateUserResCacheByRiuuidOrUiuuid(riUuid,null);
             return "success";
         }
         return "fail";

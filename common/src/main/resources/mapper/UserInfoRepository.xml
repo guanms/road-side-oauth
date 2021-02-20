@@ -144,4 +144,11 @@
         a.ui_uuid = b.ui_uuid
         ORDER BY a.ui_create_time DESC
     </select>
+
+    <select id="findUserInfosByUuids" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from user_info where ui_uuid IN
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item, jdbcType=VARCHAR}
+        </foreach>
+    </select>
 </mapper>

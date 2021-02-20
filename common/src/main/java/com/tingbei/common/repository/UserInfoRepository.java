@@ -1,13 +1,15 @@
 package com.tingbei.common.repository;
 
+import com.tingbei.common.entity.UserInfo;
 import com.tingbei.common.vo.UserInfoVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
 @Repository
-public interface UserInfoRepository {
+public interface UserInfoRepository extends Mapper<UserInfo> {
 
     /**
      * 精确查询
@@ -52,4 +54,29 @@ public interface UserInfoRepository {
      * @return 返回
      */
     List<UserInfoVO> queryAuditedUserInfoByUserNameFuzzy(@Param("userName") String userName,@Param("attribute") String attribute,@Param("createMan") String createMan);
+
+
+    /**
+     * 检查userName是否重名
+     * @param userName 用户名
+     * @param uiUuid 主键
+     * @return 返回
+     */
+    List<UserInfo> checkUserNameCanUse(@Param("userName") String userName,@Param("uiUuid") String uiUuid);
+
+    /**
+     * 检查loginName是否重复
+     * @param loginName 名
+     * @param uiUuid 建
+     * @return 返回
+     */
+    List<UserInfo> checkLoginNameCanUse(@Param("loginName") String loginName,@Param("uiUuid") String uiUuid);
+
+    /**
+     * 根据用户uuid的集合查询到登陆名称集合
+     * @param list 序列
+     * @return 返回登录名称集合
+     */
+    List<UserInfo> findUserInfosByUuids(@Param("list") List<String> list);
+
 }

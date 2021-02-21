@@ -1,9 +1,9 @@
-package com.tingbei.oauth.common;
+package com.tingbei.signup.common;
 
 import com.tingbei.common.entity.UserInfo;
 import com.tingbei.common.repository.UserInfoRepository;
 import com.tingbei.common.repository.UserRoleInfoRepository;
-import com.tingbei.oauth.service.AuthorityService;
+import com.tingbei.signup.service.AuthorityService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +18,8 @@ public class UpdateUserResourceCacheRunable implements Runnable{
     private AuthorityService authorityService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public UpdateUserResourceCacheRunable(String riUuid,UserRoleInfoRepository userRoleInfoRepository,UserInfoRepository userInfoRepository,
-                                          AuthorityService authorityService,String uiUuid){
+    public UpdateUserResourceCacheRunable(String riUuid, UserRoleInfoRepository userRoleInfoRepository, UserInfoRepository userInfoRepository,
+                                          AuthorityService authorityService, String uiUuid){
         this.riUuid = riUuid;
         this.userRoleInfoRepository = userRoleInfoRepository;
         this.userInfoRepository = userInfoRepository;

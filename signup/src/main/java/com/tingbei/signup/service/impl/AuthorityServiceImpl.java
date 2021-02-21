@@ -1,4 +1,4 @@
-package com.tingbei.oauth.service.impl;
+package com.tingbei.signup.service.impl;
 
 import com.tingbei.common.entity.UserRoleInfo;
 import com.tingbei.common.repository.*;
@@ -6,7 +6,7 @@ import com.tingbei.common.vo.*;
 import com.tingbei.common.vo.userresource.ExtendServiceResourceVo;
 import com.tingbei.common.vo.userresource.ExtendUseScopeVo;
 import com.tingbei.common.vo.userresource.UserAndResourceVO;
-import com.tingbei.oauth.service.AuthorityService;
+import com.tingbei.signup.service.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

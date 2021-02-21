@@ -1,4 +1,4 @@
-package com.tingbei.oauth.service;
+package com.tingbei.signup.service;
 
 import com.github.pagehelper.PageInfo;
 import com.tingbei.common.vo.SaveUserRequestVO;
@@ -23,7 +23,7 @@ public interface UserInfoService {
      * @return 返回 success | fail
      * @throws Exception 异常
      */
-    String updateUserStatus(String uiUuid,String status) throws Exception;
+    String updateUserStatus(String uiUuid, String status) throws Exception;
 
     /**
      * 分页查询已审核用户信息
@@ -48,7 +48,7 @@ public interface UserInfoService {
      * @return 返回 true | false
      * @throws Exception 异常
      */
-    Boolean checkUserNameCanUse(String userName,String uiUuid) throws Exception;
+    Boolean checkUserNameCanUse(String userName, String uiUuid) throws Exception;
 
     /**
      * 检查用户名是否可用
@@ -57,7 +57,7 @@ public interface UserInfoService {
      * @return 返回 true | false
      * @throws Exception 异常
      */
-    Boolean checkLoginNameCanUse(String loginName,String uiUuid) throws Exception;
+    Boolean checkLoginNameCanUse(String loginName, String uiUuid) throws Exception;
 
     /**
      * 删除用户信息

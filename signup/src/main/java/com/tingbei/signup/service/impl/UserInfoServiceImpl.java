@@ -1,4 +1,4 @@
-package com.tingbei.oauth.service.impl;
+package com.tingbei.signup.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -14,7 +14,7 @@ import com.tingbei.common.repository.UserRoleInfoRepository;
 import com.tingbei.common.util.GenerateUtil;
 import com.tingbei.common.util.MD5Util;
 import com.tingbei.common.vo.*;
-import com.tingbei.oauth.service.UserInfoService;
+import com.tingbei.signup.service.UserInfoService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.tingbei.oauth.service.impl;/**
+package com.tingbei.signup.service.impl;/**
  * @Author:JXW
  * @Date:2021/2/20 14:23
  */
@@ -14,8 +14,8 @@ import com.tingbei.common.vo.RoleInfoExtendVO;
 import com.tingbei.common.vo.TokenAndResourceVo;
 import com.tingbei.common.vo.UserInfoVO;
 import com.tingbei.common.vo.UserPageQueryParam;
-import com.tingbei.oauth.service.UpdateUserResourceCacheService;
-import com.tingbei.oauth.service.UserRoleService;
+import com.tingbei.signup.service.UpdateUserResourceCacheService;
+import com.tingbei.signup.service.UserRoleService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

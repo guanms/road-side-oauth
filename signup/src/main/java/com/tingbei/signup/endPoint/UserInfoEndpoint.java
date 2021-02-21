@@ -1,4 +1,4 @@
-package com.tingbei.oauth.endPoint;
+package com.tingbei.signup.endPoint;
 
 
 import com.github.pagehelper.PageInfo;
@@ -6,7 +6,7 @@ import com.tingbei.common.vo.SaveUserRequestVO;
 import com.tingbei.common.vo.ServiceResultVO;
 import com.tingbei.common.vo.UserInfoVO;
 import com.tingbei.common.vo.UserPageQueryParam;
-import com.tingbei.oauth.service.UserInfoService;
+import com.tingbei.signup.service.UserInfoService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

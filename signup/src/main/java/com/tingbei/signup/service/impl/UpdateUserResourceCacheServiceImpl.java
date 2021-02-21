@@ -1,18 +1,18 @@
-package com.tingbei.oauth.service.impl;
+package com.tingbei.signup.service.impl;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.tingbei.common.repository.UserInfoRepository;
 import com.tingbei.common.repository.UserRoleInfoRepository;
-import com.tingbei.oauth.common.UpdateUserResourceCacheRunable;
-import com.tingbei.oauth.service.AuthorityService;
-import com.tingbei.oauth.service.UpdateUserResourceCacheService;
+import com.tingbei.signup.common.UpdateUserResourceCacheRunable;
+import com.tingbei.signup.service.AuthorityService;
+import com.tingbei.signup.service.UpdateUserResourceCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.*;
 
 @Service
-public class UpdateUserResourceCacheServiceImpl implements UpdateUserResourceCacheService{
+public class UpdateUserResourceCacheServiceImpl implements UpdateUserResourceCacheService {
 
     @Autowired
     private UserRoleInfoRepository userRoleInfoRepository;

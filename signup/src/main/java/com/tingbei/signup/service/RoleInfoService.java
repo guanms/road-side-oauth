@@ -1,4 +1,4 @@
-package com.tingbei.oauth.service;/**
+package com.tingbei.signup.service;/**
  * @Author:JXW
  * @Date:2021/2/19 16:43
  */

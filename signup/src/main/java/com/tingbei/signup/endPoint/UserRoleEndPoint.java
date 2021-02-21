@@ -1,4 +1,4 @@
-package com.tingbei.oauth.endPoint;/**
+package com.tingbei.signup.endPoint;/**
  * @Author:JXW
  * @Date:2021/2/20 14:21
  */
@@ -8,7 +8,7 @@ import com.tingbei.common.vo.RoleInfoExtendVO;
 import com.tingbei.common.vo.SaveUserRoleRequestVO;
 import com.tingbei.common.vo.UserInfoVO;
 import com.tingbei.common.vo.UserPageQueryParam;
-import com.tingbei.oauth.service.UserRoleService;
+import com.tingbei.signup.service.UserRoleService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -7,6 +7,7 @@ import com.tingbei.signup.service.RegisterService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,10 @@ public class RegisterEndpoint {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
     private GenerateUtil generateUtil;
 
+    @Autowired
     private RegisterService registerService;
 
 

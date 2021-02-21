@@ -1,28 +1,22 @@
-package com.tingbei.oauth.endPoint;/**
- * @Author:JXW
- * @Date:2021/2/19 13:16
- */
+package com.tingbei.signup.endPoint;
 
+import com.tingbei.common.client.CheckAuthorityClient;
+import com.tingbei.common.client.OauthServiceClient;
 import com.tingbei.common.constant.RedisPrefix;
-import com.tingbei.common.entity.OauthClientDetails;
+import com.tingbei.common.util.AesUtil;
 import com.tingbei.common.util.GenerateUtil;
 import com.tingbei.common.util.MD5Util;
 import com.tingbei.common.vo.*;
 import com.tingbei.common.vo.userresource.UserAndResourceVO;
-import com.tingbei.oauth.service.AuthorityService;
-import com.tingbei.oauth.service.OauthTokenRequestService;
-import com.tingbei.oauth.service.UserLoginService;
-import com.tingbei.oauth.util.AesUtil;
+import com.tingbei.signup.service.UserLoginService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.TimeUnit;
 
@@ -39,10 +33,10 @@ public class UserLoginEndPoint {
     private UserLoginService userLoginService;
 
     @Autowired
-    private AuthorityService authorityService;
+    private OauthServiceClient oauthServiceClient;
 
     @Autowired
-    private OauthTokenRequestService oauthTokenRequestService;
+    private CheckAuthorityClient checkAuthorityClient;
 
     @Autowired
     private GenerateUtil generateUtil;
@@ -57,7 +51,7 @@ public class UserLoginEndPoint {
 
     private Logger logger= LoggerFactory.getLogger(this.getClass());
 
-    @CrossOrigin
+
     @PostMapping("/pageCarLogin")
     public ServiceResultVO userLogin(String loginName,String password){
         if (null == loginName || null == password || StringUtils.isBlank(loginName) || StringUtils.isBlank(password)) {
@@ -89,7 +83,7 @@ public class UserLoginEndPoint {
                 AuthTokenInfo authTokenInfo = GetCommonPasswordToken(oauthTokenRequestVO);
                 if(null != authTokenInfo){
                     TokenAndResourceVo tokenAndResourceVo = new TokenAndResourceVo();
-                    UserAndResourceVO userAndResourceVO = authorityService.queryUserAllResource(loginName);
+                    UserAndResourceVO userAndResourceVO = this.checkAuthorityClient.noRoleCheckByLoginName(loginName);
                     tokenAndResourceVo.setAuthTokenInfo(authTokenInfo);
                     tokenAndResourceVo.setUserAndResourceVO(userAndResourceVO);
                     String redisKey = RedisPrefix.PAGE_LOGIN_USERINFO.getPrefix() + authTokenInfo.getAccess_token();
@@ -108,7 +102,9 @@ public class UserLoginEndPoint {
         if(!StringUtils.isBlank(oauthTokenRequestVO.getUserName()) && !StringUtils.isBlank(oauthTokenRequestVO.getPassword())
                 && !StringUtils.isBlank(oauthTokenRequestVO.getClientId()) && !StringUtils.isBlank(oauthTokenRequestVO.getClientSecret())){
             try {
-                return oauthTokenRequestService.commonPasswordTokenRequest(oauthTokenRequestVO);
+                AuthTokenInfo authTokenInfo = this.oauthServiceClient.commonPasswordTokenRequest(oauthTokenRequestVO);
+
+                return authTokenInfo;
             } catch (Exception e) {
                 logger.error("OauthTokenEndpoint:::commonPasswordTokenRequest:::接口执行异常",e);
             }
@@ -118,7 +114,7 @@ public class UserLoginEndPoint {
         return null;
     }
 
-    @CrossOrigin
+
     @PostMapping("/login")
     public ServiceResultVO pageLogin(String loginName,String password){
         if (null == loginName || null == password || StringUtils.isBlank(loginName) || StringUtils.isBlank(password)) {
@@ -128,34 +124,14 @@ public class UserLoginEndPoint {
             //获取加密后的密码
             password = md5Util.getMD5ofStr(password);
             UserInfoVO userInfo = userLoginService.queryOneUserInfo(loginName,password);
-            if(null != userInfo){
-                // 用户名密码验证成功，1. 去请求token，2. 去跨服务调用鉴权，返回该用户的所有权限
-                OauthTokenRequestVO oauthTokenRequestVO = new OauthTokenRequestVO();
-
-                //根据用户名查询客户端信息
-//                OauthClientDetails oauthClientDetails = pageLoginService.queryClientInfo(userInfo.getIdentityCode());
-//                if(null != oauthClientDetails) {
-//                    oauthTokenRequestVO.setClientId(oauthClientDetails.getClientId());
-//                    oauthTokenRequestVO.setClientSecret(oauthClientDetails.getClientSecret());
-//                }
-                oauthTokenRequestVO.setClientId("ac");
-                oauthTokenRequestVO.setClientSecret("ac");
-                oauthTokenRequestVO.setUserName(loginName);
-                oauthTokenRequestVO.setPassword(password);
-                AuthTokenInfo authTokenInfo = GetCommonPasswordToken(oauthTokenRequestVO);
-                if(null != authTokenInfo){
-                    TokenAndResourceVo tokenAndResourceVo = new TokenAndResourceVo();
-                    UserAndResourceVO userAndResourceVO = authorityService.queryUserAllResource(loginName);
-                    tokenAndResourceVo.setAuthTokenInfo(authTokenInfo);
-                    tokenAndResourceVo.setUserAndResourceVO(userAndResourceVO);
-                    String redisKey = RedisPrefix.PAGE_LOGIN_USERINFO.getPrefix() + authTokenInfo.getAccess_token();
-                    this.redisTemplate.opsForValue().set(redisKey,tokenAndResourceVo,authTokenInfo.getExpires_in(), TimeUnit.SECONDS);
-                    return this.generateUtil.generageServiceResultVO(true,null,"登陆成功",tokenAndResourceVo);
+            if (null != userInfo){
+                if (loginName.equals(userInfo.getLoginName()) && password.equals(userInfo.getPassword())){
+                    return this.generateUtil.generageServiceResultVO(true,null,"登陆成功",null);
                 }else {
-                    return this.generateUtil.generageServiceResultVO(false,null,"授权错误，请联系管理员",null);
+                    return this.generateUtil.generageServiceResultVO(true,null,"登陆失败",null);
                 }
             }else {
-                return this.generateUtil.generageServiceResultVO(false,null,"用户名密码不正确",null);
+                return this.generateUtil.generageServiceResultVO(true,null,"登陆失败",null);
             }
         }
     }

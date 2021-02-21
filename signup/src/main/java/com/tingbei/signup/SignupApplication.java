@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @SpringBootApplication(scanBasePackages = "com.tingbei")
 @MapperScan("com.tingbei.common.repository")
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.tingbei.common.client")
 public class SignupApplication {
 
     public static void main(String[] args) {

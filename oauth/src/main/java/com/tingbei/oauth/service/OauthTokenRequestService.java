@@ -5,6 +5,7 @@ package com.tingbei.oauth.service;/**
 
 import com.tingbei.common.vo.AuthTokenInfo;
 import com.tingbei.common.vo.OauthTokenRequestVO;
+import com.tingbei.common.vo.ServiceResultVO;
 
 /**
  *@Author:JXW122121212121212121
@@ -13,4 +14,5 @@ import com.tingbei.common.vo.OauthTokenRequestVO;
 public interface OauthTokenRequestService {
 
     AuthTokenInfo commonPasswordTokenRequest(OauthTokenRequestVO oauthTokenRequestVO);
+
 }

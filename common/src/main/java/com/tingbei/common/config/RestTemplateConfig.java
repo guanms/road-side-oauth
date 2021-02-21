@@ -1,4 +1,4 @@
-package com.tingbei.oauth.config;
+package com.tingbei.common.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * RestTemplate配置类
- * Created by GuisenChen on 2017/2/3.
  */
 @Configuration
 public class RestTemplateConfig {

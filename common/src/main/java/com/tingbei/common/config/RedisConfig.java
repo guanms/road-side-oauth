@@ -1,4 +1,4 @@
-package com.tingbei.oauth.config;
+package com.tingbei.common.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -16,7 +16,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * redisTemplate配置类
- * Created by JJH on 2017/5/9.
  */
 @Configuration
 public class RedisConfig {

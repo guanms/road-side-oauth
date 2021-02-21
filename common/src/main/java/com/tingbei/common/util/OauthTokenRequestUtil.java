@@ -1,11 +1,11 @@
-package com.tingbei.oauth.util;
+package com.tingbei.common.util;
 
 
+import com.tingbei.common.config.OauthTokenUrlConfig;
 import com.tingbei.common.constant.TokenStyleEnum;
 import com.tingbei.common.vo.AuthTokenInfo;
 import com.tingbei.common.vo.OauthTokenRequestVO;
-import com.tingbei.oauth.config.OauthTokenUrlConfig;
-import org.apache.commons.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

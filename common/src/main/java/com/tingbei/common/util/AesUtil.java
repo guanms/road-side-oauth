@@ -1,4 +1,4 @@
-package com.tingbei.oauth.util;
+package com.tingbei.common.util;
 
 import com.taobao.api.internal.util.StringUtils;
 import org.apache.tomcat.util.codec.binary.Base64;

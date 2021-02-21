@@ -15,7 +15,7 @@
         <result column="uei_type" property="userType" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="findByLoginNameAndPassword" parameterType="java.lang.String" resultMap="BaseResultMap">
+     <select id="findByLoginNameAndPassword" parameterType="java.lang.String" resultMap="BaseResultMap">
         select a.*,b.uei_special_mark,b.uei_type from (
             SELECT
                 *

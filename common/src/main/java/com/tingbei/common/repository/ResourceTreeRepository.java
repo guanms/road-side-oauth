@@ -4,6 +4,7 @@ package com.tingbei.common.repository;/**
  */
 
 import com.tingbei.common.vo.role.ResourceTreeVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,11 +15,11 @@ import java.util.List;
  */
 @Repository
 public interface ResourceTreeRepository {
-    List<ResourceTreeVO> queryUseScopeTreeByRiUuid(String riUuid, String usName, String operateLevel);
+    List<ResourceTreeVO> queryUseScopeTreeByRiUuid(@Param("riUuid") String riUuid,@Param("usName") String usName,@Param("operateLevel") String operateLevel);
 
-    List<ResourceTreeVO> querySuUseScopeTreeByRiUuid(String riUuid, String usName, String loginUiUuid, String operateLevel);
+    List<ResourceTreeVO> querySuUseScopeTreeByRiUuid(@Param("riUuid") String riUuid,@Param("usName") String usName,@Param("loginUiUuid") String loginUiUuid,@Param("operateLevel") String operateLevel);
 
-    List<ResourceTreeVO> queryServiceResourceTreeByRiUuid(String riUuid, String usName, String operateLevel);
+    List<ResourceTreeVO> queryServiceResourceTreeByRiUuid(@Param("riUuid") String riUuid, @Param("srName") String srName, @Param("operateLevel") String operateLevel);
 
-    List<ResourceTreeVO> querySuServiceResourceTreeByRiUuid(String riUuid, String usName, String loginUiUuid, String operateLevel);
+    List<ResourceTreeVO> querySuServiceResourceTreeByRiUuid(@Param("riUuid") String riUuid,@Param("srName") String srName,@Param("loginUiUuid") String loginUiUuid,@Param("operateLevel") String operateLevel);
 }

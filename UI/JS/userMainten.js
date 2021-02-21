@@ -1,5 +1,5 @@
 var tableoption = {
-	url: config.oauthUrl+"/v1.0/dc/userInfo/operate/pageFindAudited",
+	url: oauthUrl+"/v1.0/signUp/userInfo/operate/pageFindAudited",
 	method: "post", //请求的方法
 	pageList: [5, 10, 25, 50, 100],
 	queryParamsType: 'not limit',
@@ -232,7 +232,7 @@ $(function() {
 function updateUserInfoStatus(uiUuid, status) {
 	$.ajax({
 		type: "post",
-		url: config.oauthUrl+"/v1.0/dc/userInfo/operate/updateStatus",
+		url: oauthUrl+"/v1.0/signUp/userInfo/operate/updateStatus",
 		async: true,
 		data: {
 			"uiUuid": uiUuid,
@@ -358,7 +358,7 @@ function checkUserNameCanUse(uiUuid, userName) {
 	var flag = false;
 	$.ajax({
 		type: "get",
-		url: config.oauthUrl+"/v1.0/dc/userInfo/operate/checkUserNameCanUse",
+		url: oauthUrl+"/v1.0/signUp/userInfo/operate/checkUserNameCanUse",
 		async: false,
 		data: {
 			"userName": userName,
@@ -382,7 +382,7 @@ function checkLoginNameCanUse(uiUuid, loginName) {
 	var flag = false;
 	$.ajax({
 		type: "get",
-		url: config.oauthUrl+"/v1.0/dc/userInfo/operate/checkLoginNameCanUse",
+		url: oauthUrl+"/v1.0/signUp/userInfo/operate/checkLoginNameCanUse",
 		async: false,
 		data: {
 			"loginName": loginName,
@@ -416,7 +416,7 @@ function saveUserInfo() {
 		var uiUuid = $("#uiUuid").val();
 		if(uiUuid == null || uiUuid == '' || uiUuid == undefined) {
 			$.ajax({
-				url: config.oauthUrl+ "/v1.0/dc/userInfo/operate/saveUser/fromPage",
+				url: oauthUrl+ "/v1.0/signUp/userInfo/operate/saveUser/fromPage",
 				headers: {
 					"content-Type": "application/json", // important
 				},
@@ -447,7 +447,7 @@ function saveUserInfo() {
 		} else {
 			data.uiUuid = uiUuid;
 			$.ajax({
-				url: config.oauthUrl+ "/v1.0/dc/userInfo/operate/saveUser/fromPage",
+				url: oauthUrl+ "/v1.0/signUp/userInfo/operate/saveUser/fromPage",
 				headers: {
 					"content-Type": "application/json", // important
 				},
@@ -482,7 +482,7 @@ function deleteUserInfo() {
 	var uiUuid = $("#delUuid").val();
 	$.ajax({
 		type: "post",
-		url: config.oauthUrl+"/v1.0/dc/userInfo/operate/delete",
+		url: oauthUrl+"/v1.0/signUp/userInfo/operate/delete",
 		async: true,
 		data: {"uiUuid":uiUuid},
 		success: function(result) {

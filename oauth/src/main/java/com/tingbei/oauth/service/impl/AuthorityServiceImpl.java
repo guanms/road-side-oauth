@@ -69,7 +69,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
-    @Cacheable(value = "userAllResource",keyGenerator = "wiselyKeyGenerator")
+    //@Cacheable(value = "userAllResource",keyGenerator = "wiselyKeyGenerator")
     public UserAndResourceVO queryUserAllResource(String loginName, String... identityCode) {
         UserAndResourceVO userAndResourceVO = new UserAndResourceVO();
         UserInfoVO userInfoVO ;
@@ -83,21 +83,21 @@ public class AuthorityServiceImpl implements AuthorityService {
             List<String> riUuidList = this.userRoleInfoRepository.findRoleUuidByUserUuid(userInfoVO.getUiUuid());
             if(null != riUuidList && riUuidList.size() > 0){
                 // 查询展示的使用范围资源
-                List<ExtendUseScopeVo> showScopeList = this.wholeResourceRepository.findScopeFromAuthAndTactices("show",riUuidList);
-                showScopeList = useScopeListToTreeList(showScopeList);
-                userAndResourceVO.setShowScopeList(showScopeList);
+//                List<ExtendUseScopeVo> showScopeList = this.wholeResourceRepository.findScopeFromAuthAndTactices("show",riUuidList);
+//                showScopeList = useScopeListToTreeList(showScopeList);
+//                userAndResourceVO.setShowScopeList(showScopeList);
                 // 查询可选择的使用返回资源
-                List<ExtendUseScopeVo> selectScopeList = this.wholeResourceRepository.findScopeFromAuthAndTactices("select",riUuidList);
-                selectScopeList = useScopeListToTreeList(selectScopeList);
-                userAndResourceVO.setSelectScopeList(selectScopeList);
+//                List<ExtendUseScopeVo> selectScopeList = this.wholeResourceRepository.findScopeFromAuthAndTactices("select",riUuidList);
+//                selectScopeList = useScopeListToTreeList(selectScopeList);
+//                userAndResourceVO.setSelectScopeList(selectScopeList);
                 // 查询展示的服务资源
                 List<ExtendServiceResourceVo> showSrList = this.wholeResourceRepository.findServiceResFromAuthAndTactices("show",riUuidList);
                 showSrList = srListToTreeList(showSrList);
                 userAndResourceVO.setShowSrList(showSrList);
-                // 查询操作的服务资源
-                List<ExtendServiceResourceVo> selectSrList = this.wholeResourceRepository.findServiceResFromAuthAndTactices("select",riUuidList);
-                selectSrList = srListToTreeList(selectSrList);
-                userAndResourceVO.setSelectSrList(selectSrList);
+//                // 查询操作的服务资源
+//                List<ExtendServiceResourceVo> selectSrList = this.wholeResourceRepository.findServiceResFromAuthAndTactices("select",riUuidList);
+//                selectSrList = srListToTreeList(selectSrList);
+//                userAndResourceVO.setSelectSrList(selectSrList);
             }
         }
         return userAndResourceVO;

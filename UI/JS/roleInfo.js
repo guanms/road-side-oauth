@@ -1,5 +1,5 @@
 var tableOption = {
-	url: oauthUrl+"/v1.0/oauth2Server/role/pageQueryAll",
+	url: oauthUrl+"/v1.0/signUp/role/pageQueryAll",
 	method: "post",
 	pageList: [5, 10, 25, 50, 100],
 	queryParamsType: 'not limit',
@@ -118,11 +118,9 @@ var btnShow = function(id) {
 	//      "<button type='button' onClick='showAssignPermissionsDialog(" + id + ")' class='btn btn-success member-op-btn' style='display:inline-block'><span class='glyphicon glyphicon-list-alt'></span>&nbsp;分配权限</button>";
 
 	return [
-		'<a class="update" style="margin-right: 10px;cursor:pointer;text-decoration: none;color:black" data-toggle="tooltip" data-placement="bottom" title="修改"><i class="glyphicon glyphicon-edit" style="font-size: 18px;"></i></a>',
-		'<a class="delete" style="margin-right: 10px;cursor:pointer;text-decoration: none;color:black" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="	glyphicon glyphicon-trash" style="font-size: 18px;"></i></a>',
-		'<a class="fenpei" style="margin-right: 10px;cursor:pointer;text-decoration: none;color:black" data-toggle="tooltip" data-placement="bottom" title="分配使用范围权限"><i class="glyphicon glyphicon-list-alt" style="font-size: 18px;"></i></a>',
-		'<a class="fpSr" style="margin-right: 10px;cursor:pointer;text-decoration: none;color:black" data-toggle="tooltip" data-placement="bottom" title="分配服务资源权限"><i class="glyphicon glyphicon-list-alt" style="font-size: 18px;"></i></a>'
-	].join('');
+		"<a href='javascript:;' data-name='update' class='update btn_link btn_link__primary' style='margin-right: 7px'>修改</a>",
+		"<a href='javascript:;' data-name='delete' class='delete btn_link btn_link__warm' style='margin-right: 7px'>删除</a>",		// '<a class="fenpei" style="margin-right: 10px;cursor:pointer;text-decoration: none;color:black" data-toggle="tooltip" data-placement="bottom" title="分配使用范围权限"><i class="glyphicon glyphicon-list-alt" style="font-size: 18px;"></i></a>',
+		"<a href='javascript:;' data-name='fpSr' class='fpSr btn_link btn_link__primary' style='margin-right: 7px'>分配资源</a>",	].join('');
 
 };
 
@@ -186,7 +184,7 @@ function showDeleteDialog(id) {
 	showDialog3();
 	$("#deleteRoleInfoBtn").click(function() {
 		$.ajax({
-			url: oauthUrl+ "/v1.0/oauth2Server/role/delete",
+			url: oauthUrl+ "/v1.0/signUp/role/delete",
 			type: "POST",
 			data: {
 				"riUuid": id
@@ -218,7 +216,7 @@ function saveRoleInfo() {
 		var riUuid = $("#riUuid").val();
 		if(riUuid == null || riUuid == '' || riUuid == undefined) {
 			$.ajax({
-				url: oauthUrl+ "/v1.0/oauth2Server/role/save",
+				url: oauthUrl+ "/v1.0/signUp/role/save",
 				headers: {
 					"content-Type": "application/json", // important
 				},
@@ -228,6 +226,7 @@ function saveRoleInfo() {
 					if(result == "success") {
 						hideDialog();
 						$('#roleInfoTable').bootstrapTable('refresh');
+						$("#riUuid").val("");
 					} else {
 						alert("添加失败");
 					}
@@ -240,7 +239,7 @@ function saveRoleInfo() {
 		} else {
 			data.riUuid = $("#riUuid").val();
 			$.ajax({
-				url: oauthUrl+"/v1.0/oauth2Server/role/modify",
+				url: oauthUrl+"/v1.0/signUp/role/modify",
 				headers: {
 					"content-Type": "application/json", // important
 				},
@@ -250,6 +249,7 @@ function saveRoleInfo() {
 					if(result == "success") {
 						hideDialog();
 						$('#roleInfoTable').bootstrapTable('refresh');
+						$("#riUuid").val("");
 					} else {
 						alert("修改失败");
 					}
@@ -268,7 +268,8 @@ function saveRoleInfo() {
 function checkRoleInfoForm() {
 	var riUuid = $.trim($("#riUuid").val());
 	var riRoleName = $.trim($("#riRoleName").val());
-	var riLevel = $("#riLevel").val();
+	var riLevel = '0';
+	// var riLevel = $("#riLevel").val();
 
 	if(!riRoleName || typeof(riRoleName) == 'undefined') {
 		$("#riRoleName").next().html("请输入内容");
@@ -301,7 +302,7 @@ function checkRiNameCanUse(riUuid, riRoleName) {
 		redisId: sessionStorage.getItem("redisId")
 	};
 	$.ajax({
-		url: oauthUrl + "/v1.0/oauth2Server/role/canUse",
+		url: oauthUrl + "/v1.0/signUp/role/canUse",
 		type: "post",
 		data: JSON.stringify(data),
 		contentType: "application/json",
@@ -405,7 +406,7 @@ function saveAuthority(type) {
 
 	$.ajax({
 		type: "post",
-		url: oauthUrl+"/v1.0/oauth2Server/role/saveAuthority",
+		url: oauthUrl+"/v1.0/signUp/role/saveAuthority",
 		headers: {
 			'Content-Type': 'application/json'
 		},
@@ -470,7 +471,7 @@ var srTreeNodes = []; // 服务资源nodes
 function refreshzNodes(riUuid) {
 	$.ajax({
 		type: "post",
-		url: oauthUrl+"/v1.0/oauth2Server/role/resourceTree/useScope",
+		url: oauthUrl+"/v1.0/signUp/role/resourceTree/useScope",
 		async: false,
 		data: {
 			riUuid: riUuid,
@@ -494,7 +495,7 @@ function refreshzNodes(riUuid) {
 function refreshServiceTreeNodes(riUuid) {
 	$.ajax({
 		type: "post",
-		url: oauthUrl+"/v1.0/oauth2Server/role/resourceTree/serviceResource",
+		url: oauthUrl+"/v1.0/signUp/role/resourceTree/serviceResource",
 		async: false,
 		data: {
 			riUuid: riUuid,

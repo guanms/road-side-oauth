@@ -16,7 +16,7 @@ function loadScript(){
 
 
 
-    $("head").prepend('<link rel="stylesheet" type="text/css" href="../oauth-signup-1.1/lib/bootstrap/css/bootstrap.min.css">');
+    $("head").prepend('<link rel="stylesheet" type="text/css" href="../lib/bootstrap/css/bootstrap.min.css">');
     $("head").prepend('<link rel="stylesheet" type="text/css" href="../lib/bootstrap-table/dist/bootstrap-table.min.css">');
     $("head").prepend('<link rel="stylesheet" type="text/css" href="../lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">');
     $("head").prepend('<link rel="stylesheet" type="text/css" href="../lib/bootstrap-select/css/bootstrap-select.min.css">');

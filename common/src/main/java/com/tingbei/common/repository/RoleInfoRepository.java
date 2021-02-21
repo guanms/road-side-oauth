@@ -5,6 +5,7 @@ package com.tingbei.common.repository;/**
 
 import com.tingbei.common.entity.RoleInfo;
 import com.tingbei.common.vo.RoleInfoVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -17,7 +18,7 @@ import java.util.List;
 @Repository
 public interface RoleInfoRepository extends Mapper<RoleInfo> {
 
-    List<RoleInfo> selectByRoleDesc(String riRoleDesc, String userAttribute, String loginName);
+    List<RoleInfo> selectByRoleDesc(@Param("riRoleDesc") String riRoleDesc,@Param("attribute") String userAttribute,@Param("createMan") String loginName);
 
     RoleInfoVO queryInfoFromRoleAndTactics(String riUuid);
 }

@@ -2,8 +2,6 @@ package com.tingbei.common.constant;
 
 /**
  * 通用状态枚举
- * Created by JJH on 2017/12/19.
- * @author JJH
  */
 public enum CommonStatus {
 

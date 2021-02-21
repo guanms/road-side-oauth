@@ -5,6 +5,7 @@
         <id column="ui_uuid" property="uiUuid" jdbcType="VARCHAR"/>
         <result column="ui_username" property="userName" jdbcType="VARCHAR"/>
         <result column="ui_loginname" property="loginName" jdbcType="VARCHAR"/>
+        <result column="ui_password" property="password" jdbcType="VARCHAR"/>
         <result column="ui_attribute" property="userAttribute" jdbcType="VARCHAR"/>
         <result column="ui_status" property="userStatus" jdbcType="VARCHAR"/>
         <result column="ui_create_man" property="userCreateMan" jdbcType="VARCHAR"/>

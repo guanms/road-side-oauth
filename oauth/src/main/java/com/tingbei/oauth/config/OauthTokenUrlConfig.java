@@ -1,4 +1,4 @@
-package com.tingbei.common.config;
+package com.tingbei.oauth.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

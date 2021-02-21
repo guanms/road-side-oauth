@@ -24,14 +24,7 @@ public interface CheckAuthorityClient {
     @RequestMapping(value = "/authority/checkByLoginName/{loginName}",method = RequestMethod.GET)
     UserAndRoleVO checkByLoginName(@PathVariable("loginName") String loginName);
 
-    /**
-     * 调用dc服务下的根据登录名检测用户资源列表
-     * 资源列表为不重复的父子结构
-     * @param loginName 登录名
-     * @return 返回
-     */
-    @RequestMapping(value = "/authority/noRole/checkByLoginName/{loginName}",method = RequestMethod.GET)
-    UserAndResourceVO noRoleCheckByLoginName(@PathVariable("loginName") String loginName);
+
 
 
     /**

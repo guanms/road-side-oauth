@@ -37,7 +37,7 @@ public class OauthTokenEndpoint {
         if(!StringUtils.isBlank(oauthTokenRequestVO.getUserName()) && !StringUtils.isBlank(oauthTokenRequestVO.getPassword())
                 && !StringUtils.isBlank(oauthTokenRequestVO.getClientId()) && !StringUtils.isBlank(oauthTokenRequestVO.getClientSecret())){
             try {
-                return this.oauthTokenRequestService.commonPasswordTokenRequest(oauthTokenRequestVO);
+                return oauthTokenRequestService.commonPasswordTokenRequest(oauthTokenRequestVO);
             } catch (Exception e) {
                 logger.error("OauthTokenEndpoint:::commonPasswordTokenRequest:::接口执行异常",e);
             }

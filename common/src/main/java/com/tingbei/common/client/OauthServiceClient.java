@@ -4,8 +4,10 @@ import com.tingbei.common.vo.AuthTokenInfo;
 import com.tingbei.common.vo.OauthTokenRequestVO;
 import com.tingbei.common.vo.ServiceResultVO;
 import com.tingbei.common.vo.UsersInfoParamVO;
+import com.tingbei.common.vo.userresource.UserAndResourceVO;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,4 +52,13 @@ public interface OauthServiceClient {
      */
     @RequestMapping(value = "/vapor/oauthUser/update",method = RequestMethod.POST)
     ServiceResultVO updateUserInfoByName(@RequestBody UsersInfoParamVO usersInfoParamVO);
+
+    /**
+     * 调用dc服务下的根据登录名检测用户资源列表
+     * 资源列表为不重复的父子结构
+     * @param loginName 登录名
+     * @return 返回
+     */
+    @RequestMapping(value = "/authority/noRole/checkByLoginName/{loginName}",method = RequestMethod.GET)
+    UserAndResourceVO noRoleCheckByLoginName(@PathVariable("loginName") String loginName);
 }

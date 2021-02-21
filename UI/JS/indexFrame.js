@@ -78,7 +78,7 @@ $(function () {
         $('#' + uuid).show().siblings('.sidebar-menu').hide();
     });
 
-    $.get(oauthUrl + '/v1.0/oauth/authority/noRole/checkByLoginName/' + sessionStorage.getItem('loginName'), function (res) {
+    $.get(oauthUrl + '/v1.0/oauth2Server/authority/noRole/checkByLoginName/' + sessionStorage.getItem('loginName'), function (res) {
 
         var menus = res.showSrList;
         var userInfo = res.userInfo;

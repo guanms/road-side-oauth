@@ -80,10 +80,10 @@ public class UserLoginEndPoint {
                 oauthTokenRequestVO.setClientSecret("ac");
                 oauthTokenRequestVO.setUserName(loginName);
                 oauthTokenRequestVO.setPassword(password);
-                AuthTokenInfo authTokenInfo = GetCommonPasswordToken(oauthTokenRequestVO);
+                AuthTokenInfo authTokenInfo = oauthServiceClient.commonPasswordTokenRequest(oauthTokenRequestVO);
                 if(null != authTokenInfo){
                     TokenAndResourceVo tokenAndResourceVo = new TokenAndResourceVo();
-                    UserAndResourceVO userAndResourceVO = this.checkAuthorityClient.noRoleCheckByLoginName(loginName);
+                    UserAndResourceVO userAndResourceVO = oauthServiceClient.noRoleCheckByLoginName(loginName);
                     tokenAndResourceVo.setAuthTokenInfo(authTokenInfo);
                     tokenAndResourceVo.setUserAndResourceVO(userAndResourceVO);
                     String redisKey = RedisPrefix.PAGE_LOGIN_USERINFO.getPrefix() + authTokenInfo.getAccess_token();
@@ -98,23 +98,6 @@ public class UserLoginEndPoint {
         }
     }
 
-    private AuthTokenInfo GetCommonPasswordToken(OauthTokenRequestVO oauthTokenRequestVO) {
-        if(!StringUtils.isBlank(oauthTokenRequestVO.getUserName()) && !StringUtils.isBlank(oauthTokenRequestVO.getPassword())
-                && !StringUtils.isBlank(oauthTokenRequestVO.getClientId()) && !StringUtils.isBlank(oauthTokenRequestVO.getClientSecret())){
-            try {
-                AuthTokenInfo authTokenInfo = this.oauthServiceClient.commonPasswordTokenRequest(oauthTokenRequestVO);
-
-                return authTokenInfo;
-            } catch (Exception e) {
-                logger.error("OauthTokenEndpoint:::commonPasswordTokenRequest:::接口执行异常",e);
-            }
-        }else {
-            logger.error("OauthTokenEndpoint:::commonPasswordTokenRequest:::接口参数不合法！");
-        }
-        return null;
-    }
-
-
     @PostMapping("/login")
     public ServiceResultVO pageLogin(String loginName,String password){
         if (null == loginName || null == password || StringUtils.isBlank(loginName) || StringUtils.isBlank(password)) {
@@ -125,8 +108,28 @@ public class UserLoginEndPoint {
             password = md5Util.getMD5ofStr(password);
             UserInfoVO userInfo = userLoginService.queryOneUserInfo(loginName,password);
             if (null != userInfo){
-                if (loginName.equals(userInfo.getLoginName()) && password.equals(userInfo.getPassword())){
-                    return this.generateUtil.generageServiceResultVO(true,null,"登陆成功",null);
+                // 用户名密码验证成功，1. 去请求token，2. 去跨服务调用鉴权，返回该用户的所有权限
+                OauthTokenRequestVO oauthTokenRequestVO = new OauthTokenRequestVO();
+
+                //根据用户名查询客户端信息
+//                OauthClientDetails oauthClientDetails = userLoginService.queryClientInfo(userInfo.getIdentityCode());
+//                if(null != oauthClientDetails) {
+//                    oauthTokenRequestVO.setClientId(oauthClientDetails.getClientId());
+//                    oauthTokenRequestVO.setClientSecret(oauthClientDetails.getClientSecret());
+//                }
+                oauthTokenRequestVO.setClientId("ac");
+                oauthTokenRequestVO.setClientSecret("ac");
+                oauthTokenRequestVO.setUserName(loginName);
+                oauthTokenRequestVO.setPassword(password);
+                AuthTokenInfo authTokenInfo = oauthServiceClient.commonPasswordTokenRequest(oauthTokenRequestVO);
+                if(null != authTokenInfo){
+                    TokenAndResourceVo tokenAndResourceVo = new TokenAndResourceVo();
+                    UserAndResourceVO userAndResourceVO = oauthServiceClient.noRoleCheckByLoginName(loginName);
+                    tokenAndResourceVo.setAuthTokenInfo(authTokenInfo);
+                    tokenAndResourceVo.setUserAndResourceVO(userAndResourceVO);
+                    String redisKey = RedisPrefix.PAGE_LOGIN_USERINFO.getPrefix() + authTokenInfo.getAccess_token();
+                    redisTemplate.opsForValue().set(redisKey,tokenAndResourceVo,authTokenInfo.getExpires_in(), TimeUnit.SECONDS);
+                    return this.generateUtil.generageServiceResultVO(true,null,"登陆成功",tokenAndResourceVo);
                 }else {
                     return this.generateUtil.generageServiceResultVO(true,null,"登陆失败",null);
                 }

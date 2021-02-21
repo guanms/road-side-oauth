@@ -1,7 +1,7 @@
-package com.tingbei.common.util;
+package com.tingbei.oauth.util;
 
 
-import com.tingbei.common.config.OauthTokenUrlConfig;
+import com.tingbei.oauth.config.OauthTokenUrlConfig;
 import com.tingbei.common.constant.TokenStyleEnum;
 import com.tingbei.common.vo.AuthTokenInfo;
 import com.tingbei.common.vo.OauthTokenRequestVO;

@@ -65,7 +65,7 @@ $(function () {
     $("#loginname").html(sessionStorage.getItem("loginName"));
 
     $('.btn-logout').click(function () {
-        loginOut();
+        // loginOut();
         sessionStorage.clear();
         var a = document.createElement('a');
         a.href = 'login.html';

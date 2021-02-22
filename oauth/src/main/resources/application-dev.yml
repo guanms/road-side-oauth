@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5433/oauth
+    url: jdbc:postgresql://192.168.22.230:5432/road_oauth
     username: postgres
-    password: postgres
+    password: PGpwd+*8
     hikari:
       maximum-pool-size: 50
       auto-commit: false
@@ -14,12 +14,16 @@ spring:
       minimum-idle: 5
   redis:
     cluster:
-      nodes: 47.103.72.44:7000,47.103.72.44:7001,47.103.72.44:7002,47.103.72.44:7003,47.103.72.44:7004,47.103.72.44:7005
+      nodes:
+        - 192.168.22.230:7000
+        - 192.168.22.230:7001
+        - 192.168.22.230:7002
   cloud:
     zookeeper:
       discovery:
-        root: /authorityCenter/jxw/service/@project.version@
-      connect-string:  47.103.72.44:2181
+        root: /authorityCenter/dev_gms/service/@project.version@
+      connect-string:  192.168.22.230:2181
+
 
 
 logging:
